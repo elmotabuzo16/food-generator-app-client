@@ -1,0 +1,107 @@
+body {
+  background: #f7f7f7;
+}
+
+#upscaling {
+  letter-spacing: 0.3px;
+}
+
+#homescreen {
+  margin-top: 30px;
+  font-family: 'Frank Ruhl Libre', Georgia, serif;
+}
+
+.text-orange {
+  color: #f0754f;
+  margin-bottom: 20px;
+}
+
+#footer-copyright {
+  margin-top: 30px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  color: #333;
+  font-weight: 400;
+  text-align: center;
+}
+
+#footer-disclaimer {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #6f737a;
+  font-style: italic;
+  margin: auto;
+  max-width: 864px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bg-primary .navbar-nav .nav-link.active,
+.bg-primary .navbar-nav .nav-link:focus,
+.bg-primary .navbar-nav .nav-link:hover,
+.bg-primary .navbar-nav .show > .nav-link {
+  color: white !important;
+}
+
+.bg-primary .navbar-nav .nav-link:hover,
+.bg-primary .navbar-nav .show > .nav-link {
+  color: #18bc9c !important;
+}
+
+.header__title:hover {
+  color: #18bc9c !important;
+}
+
+#generator img {
+}
+
+.navbar-collapse {
+  flex-grow: 1;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+#generated__recipe img {
+  display: -webkit-box;
+  height: 216px;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  transition: 0.2s all ease-in-out;
+}
+
+#generated__recipe img:hover {
+  transform: scale(1.04);
+}
+
+.card-title {
+  font-size: 30px;
+}
+
+.img-hover-zoom {
+  overflow: hidden; /* Removing this will break the effects */
+}
+
+.generator_card__body {
+  color: #666a70;
+}
+
+.generator_card__div {
+}
+
+.generator_card__uList {
+  padding: 0;
+  margin: 0;
+}
+
+.generator_card__list {
+  display: inline-block;
+  padding: 0 10px;
+}
