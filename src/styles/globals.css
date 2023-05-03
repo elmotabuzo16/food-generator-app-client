@@ -105,3 +105,38 @@ body {
   display: inline-block;
   padding: 0 10px;
 }
+
+.ingredient-name {
+  font-size: 18px;
+  font-weight: 550;
+  color: #333;
+  padding-left: 30px;
+}
+
+.ingredient-ul {
+  list-style: none;
+}
+
+.ingredient-list {
+  display: flex;
+  background: #ebeff4;
+  line-height: 24px;
+  margin-bottom: 8px;
+  padding: 10px;
+  padding-left: 10px;
+  align-items: center;
+}
+
+.ingredient-size-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6f737a;
+  line-height: 24px;
+  align-items: center;
+}
+
+.ingredient-image {
+  object-fit: contain;
+  height: 100%;
+  padding-left: 15px;
+}

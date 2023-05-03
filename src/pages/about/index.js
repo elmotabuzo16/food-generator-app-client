@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 
-const About = () => {
+const AboutScreen = () => {
   return (
     <article className='mt-3'>
       <Container>
@@ -37,4 +37,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutScreen;

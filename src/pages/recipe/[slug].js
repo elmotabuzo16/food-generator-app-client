@@ -1,8 +1,9 @@
 import React from 'react';
 import { API } from '../../../config';
 import { Col, Container, Image, Row } from 'react-bootstrap';
+import Rating from '@/components/Rating';
 
-const RecipeDetails = ({ recipe }) => {
+const RecipeDetailScreen = ({ recipe }) => {
   return (
     <article id='article-screen' className='mt-3'>
       <Container>
@@ -18,16 +19,17 @@ const RecipeDetails = ({ recipe }) => {
               <strong>Total Time:</strong> {recipe.recipe.totalTime}
               &nbsp;&nbsp;&nbsp;
               <strong>Serving Size:</strong> {recipe.recipe.servingCount}
-              {/* <Rating
-                value={recipe.recipe.rating}
-                text={`${recipe.recipe.numReviews} reviews`}
-              /> */}
             </p>
+            {/* <Rating
+              value={recipe.recipe.rating}
+              text={`${recipe.recipe.numReviews} reviews`}
+            /> */}
             <p className='description'>{recipe.recipe.description}</p>
             <Image
               src={recipe.recipe.main_image}
               className='article-main-image'
               fluid
+              style={{ height: '500px', maxWidth: 'auto' }}
             />
             <h4
               className='pt-4 py-2'
@@ -104,4 +106,4 @@ export async function getServerSideProps({ params }) {
   };
 }
 
-export default RecipeDetails;
+export default RecipeDetailScreen;
