@@ -1,9 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { API } from '../../../config';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  ListGroup,
+  Row,
+} from 'react-bootstrap';
 import Rating from '@/components/Rating';
+import { isAuth } from '@/actions/authActions';
+import Router from 'next/router';
+import { createRecipeReview } from '@/actions/recipeActions';
+import Loader from '@/components/Loader';
+import Message from '@/components/Message';
 
 const RecipeDetailScreen = ({ recipe }) => {
+  const [reviewValue, setReviewValue] = useState({
+    name: '',
+    rating: 0,
+    comment: '',
+    error: '',
+    loading: false,
+    message: '',
+  });
+
+  const { name, rating, comment, error, loading, message } = reviewValue;
+
+  const handleChange = (allValues) => (e) => {
+    setReviewValue({
+      ...reviewValue,
+      error: false,
+      [allValues]: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    localStorage.setItem(
+      'current_recipe',
+      JSON.stringify({
+        recipeSlug: recipe.recipe.slug,
+      })
+    );
+  }, []);
+
+  const submitReviewHandler = (e) => {
+    e.preventDefault();
+    setReviewValue({
+      ...reviewValue,
+      error: false,
+      loading: true,
+    });
+
+    const review = { name: isAuth().name, rating, comment };
+
+    createRecipeReview(recipe.recipe.slug, review).then((data) => {
+      if (data.error) {
+        setReviewValue({
+          ...reviewValue,
+          error: data.error,
+          loading: false,
+          message: data.message,
+        });
+      } else {
+        setReviewValue({
+          name: '',
+          rating: 0,
+          comment: '',
+          error: '',
+          loading: false,
+          message: data.message,
+        });
+
+        if (message === 'Review added')
+          Router.replace(`/recipe/${recipe.recipe.slug}`);
+      }
+    });
+  };
+
   return (
     <article id='article-screen' className='mt-3'>
       <Container>
@@ -58,13 +133,15 @@ const RecipeDetailScreen = ({ recipe }) => {
                 borderBottom: '1px solid rgba(0,0,0,0.125)',
               }}
             >
-              Steps
+              Instructions
             </h4>
-            <ul>
+            <ol>
               {recipe.recipe.directions.map((direction) => (
-                <li key={direction._id}>{direction.description}</li>
+                <li key={direction._id} className='mt-3'>
+                  {direction.description}
+                </li>
               ))}
-            </ul>
+            </ol>
             <h4
               className='pt-4'
               style={{
@@ -76,7 +153,7 @@ const RecipeDetailScreen = ({ recipe }) => {
             </h4>
             <ul>
               {recipe.recipe.servings.map((serving) => (
-                <li key={serving._id}>
+                <li key={serving._id} className='mt-3'>
                   {serving.name} - {serving.size} {serving.unit}
                 </li>
               ))}
@@ -88,6 +165,99 @@ const RecipeDetailScreen = ({ recipe }) => {
             </aside>
           </Col>
         </Row>
+        <Row>
+          <Col md={12} className='container-sm'>
+            <div className='comments__header'>
+              <div className='comments__title'>
+                <p
+                  style={{
+                    border: 'none',
+                    borderBottom: '1px solid rgba(0,0,0,0.125)',
+                  }}
+                ></p>
+                <h4>Comments - {recipe.recipe.reviews.length}</h4>
+                {recipe.recipe.reviews.length === 0 && (
+                  <p>
+                    There are no comments available. Create a comment below.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <ListGroup variant='flush'>
+              {recipe.recipe.reviews.map((review) => (
+                <ListGroup.Item key={review.name}>
+                  <strong>{review.name}</strong>
+                  <div>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                  </div>
+                  <p>{review.comment}</p>
+                </ListGroup.Item>
+              ))}
+
+              {!isAuth() && (
+                <Button
+                  type='submit'
+                  variant='btn btn-outline-dark'
+                  style={{ width: '300px' }}
+                  onClick={() => Router.push(`/login`)}
+                  className='mt-4'
+                >
+                  Sign In to Comment
+                </Button>
+              )}
+
+              {loading && <Loader />}
+              {error && <Message variant='danger'>{error}</Message>}
+              {message === 'Review added' && (
+                <Message variant='success'>Review added</Message>
+              )}
+              {message !== 'Review added' && message && !loading && (
+                <Message variant='danger'>{message}</Message>
+              )}
+
+              {isAuth() && (
+                <ListGroup.Item className='mt-3'>
+                  <h4>Add a Comment</h4>
+                  <Form onSubmit={submitReviewHandler}>
+                    <Form.Group controlId='rating'>
+                      <Form.Label>Rating</Form.Label>
+                      <Form.Control
+                        as='select'
+                        value={rating}
+                        onChange={handleChange('rating')}
+                        className='mb-3'
+                      >
+                        <option value=''>Select...</option>
+                        <option value='1'>1 - Poor</option>
+                        <option value='2'>2 - Fair</option>
+                        <option value='3'>3 - Good</option>
+                        <option value='4'>4 - Very Good</option>
+                        <option value='5'>5 - Excellent</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId='comment'>
+                      <Form.Label>Comment</Form.Label>
+                      <Form.Control
+                        as='textarea'
+                        row='3'
+                        value={comment}
+                        onChange={handleChange('comment')}
+                        className='mb-3'
+                        required
+                      ></Form.Control>
+                    </Form.Group>
+
+                    <Button type='submit' variant='primary'>
+                      Submit Review
+                    </Button>
+                  </Form>
+                </ListGroup.Item>
+              )}
+            </ListGroup>
+          </Col>
+        </Row>
       </Container>
     </article>
   );
@@ -97,7 +267,7 @@ export async function getServerSideProps({ params }) {
   // Fetch data for the page with the given slug
   const { slug } = params;
 
-  const res = await fetch(`${API}/api/recipe/${slug}`);
+  const res = await fetch(`${API}/recipe/${slug}`);
   const data = await res.json();
   return {
     props: {

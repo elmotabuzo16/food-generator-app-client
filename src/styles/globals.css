@@ -140,3 +140,7 @@ body {
   height: 100%;
   padding-left: 15px;
 }
+
+.list-group {
+  --bs-list-group-bg: none;
+}

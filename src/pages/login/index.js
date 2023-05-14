@@ -1,7 +1,7 @@
 import FormContainer from '@/components/FormContainer';
 import { Button, Form } from 'react-bootstrap';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { authenticate, isAuth, signin } from '@/actions/authActions';
 import Router from 'next/router';
 
@@ -16,6 +16,12 @@ const LoginScreen = () => {
   });
 
   const { email, password, error, loading, message, showForm } = values;
+
+  useEffect(() => {
+    if (isAuth()) {
+      Router.push(`/`);
+    }
+  }, []);
 
   const handleChange = (allValues) => (e) => {
     setValues({ ...values, error: false, [allValues]: e.target.value });
@@ -34,7 +40,15 @@ const LoginScreen = () => {
         authenticate(data, () => {
           if (isAuth()) {
             console.log('authenticated');
-            Router.push(`/`);
+            if (localStorage.getItem('current_recipe')) {
+              // get localStorage slug
+              const arr = localStorage.getItem('current_recipe');
+              console.log('hehe');
+              // push to the slug
+              Router.push(`/`);
+            } else {
+              Router.push(`/`);
+            }
           }
         });
       }
@@ -57,6 +71,7 @@ const LoginScreen = () => {
       {showMessage()}
       {showForm && (
         <FormContainer>
+          <h1>Login</h1>
           {/* {error && <Message variant='danger'>{error}</Message>}
         {loading && <Loader />} */}
           <Form onSubmit={submitHandler}>

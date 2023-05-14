@@ -14,7 +14,7 @@ import Router from 'next/router';
 const Header = () => {
   const logoutHandler = () => {
     logout();
-    Router.replace(`/`);
+    Router.replace(`/login`);
   };
   return (
     <header>
@@ -64,7 +64,7 @@ const Header = () => {
                       Sign up
                     </Button>
                   </div>
-                  <Link href='/login'>Already a member? Login.</Link>
+                  <Link href='/login'Am>Already a member? Login.</Link>
                 </div>
               )}
 

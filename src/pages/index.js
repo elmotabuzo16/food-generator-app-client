@@ -2,8 +2,49 @@ import '@/styles/Home.module.css';
 import { Container, Row } from 'react-bootstrap';
 import Upscaling from '@/components/Upscaling';
 import Generator from '@/components/Generator';
+import { useEffect } from 'react';
+import Head from 'next/head';
+import { APP_NAME, DOMAIN } from '../../config';
 
 export default function Home() {
+  const head = () => (
+    <Head>
+      <title>Keto Food Generator | Low Carb & Keto Meals</title>
+      <meta
+        name='description'
+        content='Keto Food Generator - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.'
+      />
+      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <meta
+        property='og:title'
+        content={`Latest web developoment tutorials | ${APP_NAME}`}
+      />
+      <meta
+        property='og:description'
+        content='Programming blogs and tutorials on react node next vue php laravel and web developoment'
+      />
+      <meta property='og:type' content='webiste' />
+      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:site_name' content={`${APP_NAME}`} />
+
+      <meta
+        property='og:image'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta
+        property='og:image:secure_url'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta property='og:image:type' content='image/jpg' />
+    </Head>
+  );
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('current_recipe');
+    }
+  }, []);
+
   return (
     <div id='homescreen'>
       <Container>

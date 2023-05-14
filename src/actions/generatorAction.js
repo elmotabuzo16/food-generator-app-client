@@ -2,7 +2,7 @@ import _fetch from 'isomorphic-fetch';
 import { API } from '../../config';
 
 export const generateFood = (mealType) => {
-  return fetch(`${API}/api/recipe`, {
+  return fetch(`${API}/recipe`, {
     method: 'GET',
     headers: {
       'Cache-Control': 'no-cache',
