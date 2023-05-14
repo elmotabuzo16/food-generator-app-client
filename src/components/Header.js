@@ -10,12 +10,26 @@ import {
 import Link from 'next/link';
 import { isAuth, logout } from '@/actions/authActions';
 import Router from 'next/router';
+import nProgress from 'nprogress';
+
+const startProgress = () => {
+  nProgress.start();
+};
+
+const stopProgress = () => {
+  nProgress.done();
+};
 
 const Header = () => {
+  Router.events.on('routeChangeStart', startProgress);
+  Router.events.on('routeChangeComplete', stopProgress);
+  Router.events.on('routeChangeError', stopProgress);
+
   const logoutHandler = () => {
     logout();
     Router.replace(`/login`);
   };
+
   return (
     <header>
       <Navbar
@@ -36,6 +50,12 @@ const Header = () => {
             <Nav className='mx-auto'>
               <Nav.Link as={Link} href='/blogs/how-to-start-keto-diet'>
                 How to start Keto Diet?
+              </Nav.Link>
+              <Nav.Link as={Link} href='/blogs/'>
+                Blogs
+              </Nav.Link>
+              <Nav.Link as={Link} href='/recipes/'>
+                Recipes
               </Nav.Link>
               <Nav.Link as={Link} href='/about' style={{ marginRight: '30px' }}>
                 About Us
@@ -64,7 +84,9 @@ const Header = () => {
                       Sign up
                     </Button>
                   </div>
-                  <Link href='/login'Am>Already a member? Login.</Link>
+                  <Link href='/login' Am>
+                    Already a member? Login.
+                  </Link>
                 </div>
               )}
 

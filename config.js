@@ -13,3 +13,4 @@ export const DOMAIN = publicRuntimeConfig.PRODUCTION
 export const APP_NAME = publicRuntimeConfig.APP_NAME;
 
 export const API_URL = publicRuntimeConfig.API_URL;
+export const FB_APP_ID = publicRuntimeConfig.FB_APP_ID;
