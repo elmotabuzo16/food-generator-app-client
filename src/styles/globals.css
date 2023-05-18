@@ -153,3 +153,19 @@ body {
 .list-group {
   --bs-list-group-bg: none;
 }
+
+.nav-pills .nav-link {
+  border-radius: 0;
+  color: #000000;
+  background-color: #dddddd;
+}
+
+.navpills .nav-item:not(:nth-last-child(1)) .nav-link {
+  border-right: 1px solid white;
+}
+
+.font-profile {
+  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+}

@@ -1,13 +1,21 @@
 import FormContainer from '@/components/FormContainer';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row, Spinner } from 'react-bootstrap';
 
 import React, { useEffect, useState } from 'react';
-import { authenticate, isAuth, signin } from '@/actions/authActions';
+import {
+  authenticate,
+  getRecipeSlug,
+  isAuth,
+  signin,
+} from '@/actions/authActions';
 import Router from 'next/router';
+import Loader from '@/components/Loader';
+import Message from '@/components/Message';
+import Link from 'next/link';
 
 const LoginScreen = () => {
   const [values, setValues] = useState({
-    email: 'admin@example.com',
+    emailOrUsername: 'admin@example.com',
     password: '8#762YyJ1Ww9',
     error: '',
     loading: false,
@@ -15,7 +23,8 @@ const LoginScreen = () => {
     showForm: true,
   });
 
-  const { email, password, error, loading, message, showForm } = values;
+  const { emailOrUsername, password, error, loading, message, showForm } =
+    values;
 
   useEffect(() => {
     if (isAuth()) {
@@ -31,7 +40,7 @@ const LoginScreen = () => {
     e.preventDefault();
     setValues({ ...values, loading: true, error: false });
 
-    const user = { email, password };
+    const user = { emailOrUsername, password };
 
     signin(user).then((data) => {
       if (data.error) {
@@ -39,13 +48,9 @@ const LoginScreen = () => {
       } else {
         authenticate(data, () => {
           if (isAuth()) {
-            console.log('authenticated');
             if (localStorage.getItem('current_recipe')) {
-              // get localStorage slug
-              const arr = localStorage.getItem('current_recipe');
-              console.log('hehe');
-              // push to the slug
-              Router.push(`/`);
+              const savedSlug = getRecipeSlug().recipeSlug;
+              Router.push(`/recipe/${savedSlug}`);
             } else {
               Router.push(`/`);
             }
@@ -55,33 +60,28 @@ const LoginScreen = () => {
     });
   };
 
-  const showLoading = () =>
-    loading ? <div className='alert alert-info'>Loading...</div> : '';
-
-  const showError = () =>
-    error ? <div className='alert alert-danger'>{error}</div> : '';
-
-  const showMessage = () =>
-    message ? <div className='alert alert-info'>{message}</div> : '';
-
   return (
     <>
-      {showError()}
-      {showLoading()}
-      {showMessage()}
       {showForm && (
         <FormContainer>
-          <h1>Login</h1>
-          {/* {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader />} */}
+          <h1 className='text-center'>Login</h1>
+          {error && <Message variant='danger'>{error}</Message>}
+          {loading && (
+            <Message variant='info'>
+              <span>Logging in...</span>
+              <span style={{ paddingLeft: '10px' }}>
+                <Spinner animation='border' size='sm'></Spinner>
+              </span>
+            </Message>
+          )}
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='email'>
-              <Form.Label className='pt-3'>Email Address</Form.Label>
+            <Form.Group controlId='emailOrUsername'>
+              <Form.Label className='pt-3'>Username / Email Address</Form.Label>
               <Form.Control
-                type='email'
-                placeholder='Enter email'
-                value={email}
-                onChange={handleChange('email')}
+                type='text'
+                placeholder='Enter Username or Email'
+                value={emailOrUsername}
+                onChange={handleChange('emailOrUsername')}
               ></Form.Control>
             </Form.Group>
 
@@ -99,6 +99,10 @@ const LoginScreen = () => {
               Login
             </Button>
           </Form>
+
+          <Row className='mt-4'>
+            <Link href='/login/password/forgot'>Forgot your password?</Link>
+          </Row>
         </FormContainer>
       )}
     </>

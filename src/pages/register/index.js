@@ -5,7 +5,7 @@ import Message from '@/components/Message';
 import Link from 'next/link';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 
 const index = () => {
   const [values, setValues] = useState({
@@ -13,6 +13,7 @@ const index = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    username: '',
     loading: false,
     message: '',
     error: '',
@@ -28,6 +29,7 @@ const index = () => {
     password,
     confirmPassword,
     loading,
+    username,
     message,
     error,
     success,
@@ -47,7 +49,7 @@ const index = () => {
     e.preventDefault();
     setValues({ ...values, loading: true, error: false });
 
-    const user = { name, email, password };
+    const user = { username, name, email, password };
 
     if (password !== confirmPassword) {
       setValues({
@@ -58,7 +60,7 @@ const index = () => {
     } else {
       signup(user).then((data) => {
         if (data.error) {
-          setValues({ ...values, error: data.error, loading: true });
+          setValues({ ...values, error: data.error, loading: false });
         } else {
           setValues({
             ...values,
@@ -81,21 +83,40 @@ const index = () => {
   return (
     <FormContainer>
       <h1 className='text-center'>Create your account</h1>
-      {success && <Message variant='success'>{success}</Message>}
-      {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
+      {success && <Message variant='success my-4'>{success}</Message>}
+      {message && <Message variant='danger my-4'>{message}</Message>}
+      {error && <Message variant='danger my-4'>{error}</Message>}
+      {loading && (
+        <Message variant='info' className='my-4'>
+          <span>Logging in...</span>
+          <span style={{ paddingLeft: '10px' }}>
+            <Spinner animation='border' size='sm'></Spinner>
+          </span>
+        </Message>
+      )}
       {!showForm && (
-        <Message variant='success'>
+        <Message variant='success my-4'>
           Registration Successful. Please go to Login.
         </Message>
       )}
       {showForm && (
         <Form onSubmit={submitHandler}>
+          <Form.Group controlId='username'>
+            <Form.Label className='mt-3'>Username</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter username'
+              value={username}
+              onChange={handleChange('username')}
+              minLength={6}
+              required
+            ></Form.Control>
+          </Form.Group>
+
           <Form.Group controlId='name'>
             <Form.Label className='mt-3'>Name</Form.Label>
             <Form.Control
-              type='name'
+              type='text'
               placeholder='Enter name'
               value={name}
               onChange={handleChange('name')}
@@ -121,6 +142,7 @@ const index = () => {
               placeholder='Enter password'
               value={password}
               onChange={handleChange('password')}
+              minLength={8}
               required
             ></Form.Control>
           </Form.Group>
@@ -132,6 +154,7 @@ const index = () => {
               placeholder='Confirm password'
               value={confirmPassword}
               onChange={handleChange('confirmPassword')}
+              minLength={8}
               required
             ></Form.Control>
           </Form.Group>

@@ -7,9 +7,8 @@ const nextConfig = {
     API_PRODUCTION: 'https://food-generator-app-api.vercel.app/api',
     DOMAIN_DEVELOPMENT: 'http://localhost:3000/',
     DOMAIN_PRODUCTION: 'https://ketofoodgenerator.com/',
-    API_URL: 'https://food-generator-app.vercel.app/api',
     FB_APP_ID: '253159533892465',
-    PRODUCTION: true,
+    PRODUCTION: false,
   },
 };
 

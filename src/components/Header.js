@@ -27,7 +27,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     logout();
-    Router.replace(`/login`);
+    Router.replace(`/ `);
   };
 
   return (
@@ -48,13 +48,10 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='mx-auto'>
-              <Nav.Link as={Link} href='/blogs/how-to-start-keto-diet'>
-                How to start Keto Diet?
-              </Nav.Link>
-              <Nav.Link as={Link} href='/blogs/'>
+              <Nav.Link as={Link} href='/blogs'>
                 Blogs
               </Nav.Link>
-              <Nav.Link as={Link} href='/recipes/'>
+              <Nav.Link as={Link} href='/recipes'>
                 Recipes
               </Nav.Link>
               <Nav.Link as={Link} href='/about' style={{ marginRight: '30px' }}>
@@ -91,40 +88,23 @@ const Header = () => {
               )}
 
               {isAuth() && isAuth().isAdmin && (
-                <NavDropdown title='Admin' id='username'>
-                  <Nav.Link as={Link} href='/login'>
-                    <NavDropdown.Item className='text-center'>
-                      Recipe
-                    </NavDropdown.Item>
+                <>
+                  <Nav.Link as={Link} href='/admin'>
+                    Admin Dashboard
                   </Nav.Link>
-                  <Nav.Link as={Link} href='/login'>
-                    <NavDropdown.Item className='text-center'>
-                      Blogs
-                    </NavDropdown.Item>
-                  </Nav.Link>
-                  <NavDropdown.Item
-                    className='text-center'
-                    onClick={logoutHandler}
-                  >
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+
+                  <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+                </>
               )}
 
               {isAuth() && !isAuth().isAdmin && (
-                <NavDropdown title={isAuth().name} id='username'>
-                  <Nav.Link as={Link} href='/login'>
-                    <NavDropdown.Item className='text-center'>
-                      Profile
-                    </NavDropdown.Item>
+                <>
+                  <Nav.Link as={Link} href='/profile'>
+                    My Profile
                   </Nav.Link>
-                  <NavDropdown.Item
-                    className='text-center'
-                    onClick={logoutHandler}
-                  >
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+
+                  <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+                </>
               )}
             </Nav>
           </Navbar.Collapse>

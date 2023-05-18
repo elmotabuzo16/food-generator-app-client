@@ -11,13 +11,15 @@ import {
 } from 'react-bootstrap';
 import Rating from '@/components/Rating';
 import { isAuth } from '@/actions/authActions';
-import Router from 'next/router';
-import { createRecipeReview } from '@/actions/recipeActions';
+import Router, { withRouter } from 'next/router';
+import { createRecipeReview, loadSingleRecipe } from '@/actions/recipeActions';
 import Loader from '@/components/Loader';
 import Message from '@/components/Message';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import moment from 'moment';
 
-const RecipeDetailScreen = ({ recipe }) => {
+const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
     <Head>
       <title>
@@ -56,6 +58,8 @@ const RecipeDetailScreen = ({ recipe }) => {
     message: '',
   });
 
+  const [singleRecipe, setSingleRecipe] = useState([]);
+
   const { name, rating, comment, error, loading, message } = reviewValue;
 
   const handleChange = (allValues) => (e) => {
@@ -73,7 +77,19 @@ const RecipeDetailScreen = ({ recipe }) => {
         recipeSlug: recipe.recipe.slug,
       })
     );
+
+    initSingleRecipe();
   }, []);
+
+  const initSingleRecipe = () => {
+    loadSingleRecipe(router.query.slug).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setSingleRecipe(data);
+      }
+    });
+  };
 
   const submitReviewHandler = (e) => {
     e.preventDefault();
@@ -200,6 +216,7 @@ const RecipeDetailScreen = ({ recipe }) => {
               </aside>
             </Col>
           </Row>
+
           <Row>
             <Col md={12} className='container-sm'>
               <div className='comments__header'>
@@ -220,14 +237,14 @@ const RecipeDetailScreen = ({ recipe }) => {
               </div>
 
               <ListGroup variant='flush'>
-                {recipe.recipe.reviews.map((review) => (
-                  <ListGroup.Item key={review.name}>
-                    <strong>{review.name}</strong>
+                {recipe.recipe.reviews.map((review, i) => (
+                  <ListGroup.Item key={i}>
+                    <strong>{review.name} </strong> -{' '}
+                    {moment(review.updatedAt).fromNow()}
                     <div>
                       <Rating value={review.rating} />
-                      <p>{review.createdAt.substring(0, 10)}</p>
                     </div>
-                    <p>{review.comment}</p>
+                    <p className='mt-3'>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
 
@@ -244,12 +261,20 @@ const RecipeDetailScreen = ({ recipe }) => {
                 )}
 
                 {loading && <Loader />}
-                {error && <Message variant='danger'>{error}</Message>}
+                {error && (
+                  <Message variant='danger' className='my-4'>
+                    {error}
+                  </Message>
+                )}
                 {message === 'Review added' && (
-                  <Message variant='success'>Review added</Message>
+                  <Message variant='success' className='my-4'>
+                    Review added. Please refresh the page to view your review.
+                  </Message>
                 )}
                 {message !== 'Review added' && message && !loading && (
-                  <Message variant='danger'>{message}</Message>
+                  <Message variant='danger' className='my-4'>
+                    {message}
+                  </Message>
                 )}
 
                 {isAuth() && (
@@ -263,6 +288,7 @@ const RecipeDetailScreen = ({ recipe }) => {
                           value={rating}
                           onChange={handleChange('rating')}
                           className='mb-3'
+                          required
                         >
                           <option value=''>Select...</option>
                           <option value='1'>1 - Poor</option>
@@ -307,9 +333,9 @@ export async function getServerSideProps({ params }) {
   const data = await res.json();
   return {
     props: {
-      recipe: { recipe: data },
+      recipe: { recipe: data, slug },
     },
   };
 }
 
-export default RecipeDetailScreen;
+export default withRouter(RecipeDetailScreen);

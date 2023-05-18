@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout';
 import '@/styles/bootstrap.min.css';
 import '@/styles/globals.css';
-import '@/styles/globals.css';
 import dynamic from 'next/dynamic';
 
 export default function App({ Component, pageProps }) {
