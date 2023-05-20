@@ -60,10 +60,6 @@ const Profile = () => {
   return (
     <>
       <FormContainer>
-        <Link href='/profile' className='btn btn-outline-primary my-3'>
-          Go Back
-        </Link>
-
         <h3 className='text-center mb-4'>Update account details</h3>
 
         {success && <Message variant='success'>{success}</Message>}

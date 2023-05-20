@@ -42,8 +42,11 @@ const RecipeDetailScreen = ({ recipe, router }) => {
       />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
-      <meta property='og:image' content='' />
-      <meta property='og:image:secure_url' ccontent='' />
+      <meta property='og:image' content={`${DOMAIN}/${recipe.recipe.name}`} />
+      <meta
+        property='og:image:secure_url'
+        content={`${DOMAIN}/${recipe.recipe.name}`}
+      />
       <meta property='og:image:type' content='image/jpg' />
       <meta property='fb:app_id' content={`${FB_APP_ID}`} />
     </Head>
@@ -126,47 +129,43 @@ const RecipeDetailScreen = ({ recipe, router }) => {
   };
 
   return (
-    <>
+    <div itemScope itemType='http://schema.org/Recipe'>
       {head()}
       <article id='article-screen' className='mt-3'>
         <Container>
           <Row>
             <Col md={9}>
-              <h1>{recipe.recipe.name}</h1>
-              <p
-                style={{
-                  border: 'none',
-                  borderBottom: '1px solid rgba(0,0,0,0.125)',
-                }}
-              >
-                <strong>Total Time:</strong> {recipe.recipe.totalTime}
-                &nbsp;&nbsp;&nbsp;
-                <strong>Serving Size:</strong> {recipe.recipe.servingCount}
-              </p>
+              <h1 itemProp='name'>{recipe.recipe.name}</h1>
+              <strong>Total Time:</strong> {recipe.recipe.totalTime}
+              &nbsp;&nbsp;&nbsp;
+              <strong>Serving Size:</strong> {recipe.recipe.servingCount}
+              <hr />
               {/* <Rating
               value={recipe.recipe.rating}
               text={`${recipe.recipe.numReviews} reviews`}
             /> */}
-              <p className='description'>{recipe.recipe.description}</p>
+              <p itemProp='description' className='description'>
+                {recipe.recipe.description}
+              </p>
               <Image
+                itemProp='image'
                 src={recipe.recipe.main_image}
                 className='article-main-image'
                 fluid
                 style={{ height: '500px', maxWidth: 'auto' }}
               />
-              <h4
-                className='pt-4 py-2'
-                style={{
-                  border: 'none',
-                  borderBottom: '1px solid rgba(0,0,0,0.125)',
-                }}
-              >
-                Ingredients
-              </h4>
+              <h4 className='mt-4'>Ingredients</h4>
+              <hr />
               <ul className='ingredient-ul'>
                 {recipe.recipe.ingredients.map((ingredient) => (
-                  <li key={ingredient._id} className='ingredient-list rounded'>
+                  <li
+                    itemProp='recipeIngredient'
+                    key={ingredient._id}
+                    className='ingredient-list rounded'
+                  >
                     <Image
+                      height={56}
+                      width={56}
                       src={ingredient.image}
                       className='ingredient-image'
                     />
@@ -177,31 +176,21 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </li>
                 ))}
               </ul>
-              <h4
-                className='pt-4'
-                style={{
-                  border: 'none',
-                  borderBottom: '1px solid rgba(0,0,0,0.125)',
-                }}
-              >
-                Instructions
-              </h4>
+              <h4 className='mt-4'>Steps</h4>
+              <hr />
               <ol>
                 {recipe.recipe.directions.map((direction) => (
-                  <li key={direction._id} className='mt-3'>
+                  <li
+                    itemProp='recipeInstructions'
+                    key={direction._id}
+                    className='mt-3'
+                  >
                     {direction.description}
                   </li>
                 ))}
               </ol>
-              <h4
-                className='pt-4'
-                style={{
-                  border: 'none',
-                  borderBottom: '1px solid rgba(0,0,0,0.125)',
-                }}
-              >
-                Nutritional Value
-              </h4>
+              <h4 className='mt-4'>Nutritional Value</h4>
+              <hr />
               <ul>
                 {recipe.recipe.servings.map((serving) => (
                   <li key={serving._id} className='mt-3'>
@@ -210,6 +199,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 ))}
               </ul>
             </Col>
+
             <Col md={3}>
               <aside>
                 <p></p>
@@ -221,12 +211,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
             <Col md={12} className='container-sm'>
               <div className='comments__header'>
                 <div className='comments__title'>
-                  <p
-                    style={{
-                      border: 'none',
-                      borderBottom: '1px solid rgba(0,0,0,0.125)',
-                    }}
-                  ></p>
+                  <hr />
                   <h4>Comments - {recipe.recipe.reviews.length}</h4>
                   {recipe.recipe.reviews.length === 0 && (
                     <p>
@@ -279,7 +264,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
 
                 {isAuth() && (
                   <ListGroup.Item className='mt-3'>
-                    <h4>Add a Comment</h4>
+                    <h4>Add a Rating</h4>
                     <Form onSubmit={submitReviewHandler}>
                       <Form.Group controlId='rating'>
                         <Form.Label>Rating</Form.Label>
@@ -321,7 +306,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
           </Row>
         </Container>
       </article>
-    </>
+    </div>
   );
 };
 

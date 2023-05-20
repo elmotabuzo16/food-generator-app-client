@@ -1,22 +1,19 @@
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { Spinner, Table } from 'react-bootstrap';
+import moment from 'moment';
 import { isAuth } from '@/actions/authActions';
 import {
   approveRecipe,
   loadAllNonApprovedRecipes,
 } from '@/actions/recipeActions';
-import Message from './Message';
-import Loader from './Loader';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
-import { InputText } from 'primereact/inputtext';
 import { FilterMatchMode } from 'primereact/api';
 import { Tag } from 'primereact/tag';
 import SkeletonTableRecipeNonApproved from './Skeleton/SkeletonTableRecipeNonApproved';
+import { InputText } from 'primereact/inputtext';
 
 const TableRecipeNonApproved = ({ username }) => {
   const [allNonApprovedRecipes, setNonApprovedRecipes] = useState([]);
@@ -52,7 +49,7 @@ const TableRecipeNonApproved = ({ username }) => {
   };
 
   const handleButtonClick = (event, slug) => {
-    let token = isAuth().token;
+    let token = isAuth()?.token;
 
     if (token) {
       approveRecipe(token, slug).then((data) => {
@@ -92,6 +89,17 @@ const TableRecipeNonApproved = ({ username }) => {
     );
   };
 
+  const approvalBodyTemplate = (recipe) => {
+    return (
+      <Button
+        className='btn btn-primary btn-sm mt-3'
+        onClick={(event) => handleButtonClick(event, recipe.slug)}
+      >
+        Click here to approve
+      </Button>
+    );
+  };
+
   const getSeverity = (recipe) => {
     switch (recipe.approved) {
       case true:
@@ -103,6 +111,15 @@ const TableRecipeNonApproved = ({ username }) => {
       default:
         return null;
     }
+  };
+  const createProductHandler = (e) => {
+    e.preventDefault();
+
+    Router.replace(`/recipe/create/new`);
+  };
+
+  const createdAtBodyTemplate = (recipe) => {
+    return moment(recipe.createdAt).fromNow();
   };
 
   return (
@@ -118,7 +135,23 @@ const TableRecipeNonApproved = ({ username }) => {
           </button>
         </div>
       )}
-
+      <div className='mt-4'>
+        <InputText
+          placeholder='Search Recipes'
+          onInput={(e) =>
+            setFilters({
+              ...filters,
+              global: {
+                value: e.target.value,
+                matchMode: FilterMatchMode.CONTAINS,
+              },
+            })
+          }
+        />
+        <Button style={{ float: 'right' }} onClick={createProductHandler}>
+          Create Recipe
+        </Button>
+      </div>{' '}
       {loading && <SkeletonTableRecipeNonApproved />}
       {!loading && (
         <DataTable
@@ -126,7 +159,6 @@ const TableRecipeNonApproved = ({ username }) => {
           filters={filters}
           paginator
           rows={5}
-          className='mt-4'
         >
           <Column
             header='Image'
@@ -141,11 +173,26 @@ const TableRecipeNonApproved = ({ username }) => {
           <Column field='fat' header='Fat' />
           <Column field='totalTime' header='Total Time' />
           <Column
-            field='approved'
-            header='Approval'
-            body={statusBodyTemplate}
-            sortable
+            field='createdAt'
+            header='Created At'
+            body={createdAtBodyTemplate}
           />
+          {!isAuth()?.isAdmin && (
+            <Column
+              field='approved'
+              header='Approval'
+              body={statusBodyTemplate}
+              sortable
+            />
+          )}
+          {isAuth()?.isAdmin && (
+            <Column
+              field='approved'
+              header='Approval'
+              body={approvalBodyTemplate}
+              sortable
+            />
+          )}
         </DataTable>
       )}
     </>

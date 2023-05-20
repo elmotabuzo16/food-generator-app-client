@@ -169,3 +169,15 @@ body {
     Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
 }
+
+.btn-heart {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: grey;
+  font-size: 30px;
+}
+
+.btn-heart i:hover {
+  cursor: pointer;
+}

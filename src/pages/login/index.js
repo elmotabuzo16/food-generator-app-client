@@ -8,20 +8,51 @@ import {
   isAuth,
   signin,
 } from '@/actions/authActions';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import Loader from '@/components/Loader';
 import Message from '@/components/Message';
 import Link from 'next/link';
+import Head from 'next/head';
+import { APP_NAME, DOMAIN } from '../../../config';
 
-const LoginScreen = () => {
+const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({
-    emailOrUsername: 'admin@example.com',
-    password: '8#762YyJ1Ww9',
+    emailOrUsername: '',
+    password: '',
     error: '',
     loading: false,
     message: '',
     showForm: true,
   });
+
+  const head = () => (
+    <Head>
+      <title> Login | Keto Food Generator</title>
+      <meta
+        name='description'
+        content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
+      />
+      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:title' content={`Login | Keto Food Generator`} />
+      <meta
+        property='og:description'
+        content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
+      />
+      <meta property='og:type' content='webiste' />
+      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:site_name' content={`${APP_NAME}`} />
+
+      <meta
+        property='og:image'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta
+        property='og:image:secure_url'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta property='og:image:type' content='image/jpg' />
+    </Head>
+  );
 
   const { emailOrUsername, password, error, loading, message, showForm } =
     values;
@@ -62,6 +93,7 @@ const LoginScreen = () => {
 
   return (
     <>
+      {head()}
       {showForm && (
         <FormContainer>
           <h1 className='text-center'>Login</h1>
@@ -109,4 +141,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default withRouter(LoginScreen);

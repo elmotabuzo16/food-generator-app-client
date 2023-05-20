@@ -99,6 +99,58 @@ export const approveRecipe = (token, slug) => {
     });
 };
 
+// export const favoriteRecipe = (token, foodId) => {
+//   return fetch(`${API}/recipe/favorite`, {
+//     method: 'PUT',
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(foodId),
+//   })
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+export const favoriteRecipe = (foodId) => {
+  const token = isAuth().token;
+  return fetch(`${API}/recipe/favorite`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(foodId),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getFavorites = () => {
+  const token = isAuth().token;
+
+  return fetch(`${API}/recipe/userfavorites`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 // export const createRecipe = (token, recipe) => {
 //   return fetch(`${API}/recipe/create`, {
 //     method: 'POST',

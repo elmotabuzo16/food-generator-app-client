@@ -6,8 +6,43 @@ import Link from 'next/link';
 import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { withRouter } from 'next/router';
+import Head from 'next/head';
+import { APP_NAME, DOMAIN } from '../../../config';
 
-const Recipes = () => {
+const Recipes = ({ router }) => {
+  const head = () => (
+    <Head>
+      <title> Keto Recipes | Keto Food Generator</title>
+      <meta
+        name='description'
+        content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
+      />
+      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <meta
+        property='og:title'
+        content={`Keto Recipes | Keto Food Generator`}
+      />
+      <meta
+        property='og:description'
+        content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
+      />
+      <meta property='og:type' content='webiste' />
+      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:site_name' content={`${APP_NAME}`} />
+
+      <meta
+        property='og:image'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta
+        property='og:image:secure_url'
+        content={`${DOMAIN}/static/images/seoblog.jpg`}
+      />
+      <meta property='og:image:type' content='image/jpg' />
+    </Head>
+  );
+
   const [allRecipes, setAllRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -26,7 +61,6 @@ const Recipes = () => {
 
   useEffect(() => {
     loadRecipe();
-    console.log(allRecipes);
   }, []);
 
   const createProductHandler = (e) => {
@@ -37,16 +71,8 @@ const Recipes = () => {
 
   return (
     <>
+      {head()}
       <Container>
-        <Row>
-          <Col className='align-items-center mt-4'>
-            <Button className='my-3' onClick={createProductHandler}>
-              Create Recipe
-            </Button>
-          </Col>
-          <Col></Col>
-        </Row>
-
         <Row>
           <TableRecipeApproved allRecipes={allRecipes} loading={loading} />
         </Row>
@@ -55,4 +81,4 @@ const Recipes = () => {
   );
 };
 
-export default Recipes;
+export default withRouter(Recipes);

@@ -48,9 +48,6 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='mx-auto'>
-              <Nav.Link as={Link} href='/blogs'>
-                Blogs
-              </Nav.Link>
               <Nav.Link as={Link} href='/recipes'>
                 Recipes
               </Nav.Link>
@@ -78,10 +75,10 @@ const Header = () => {
                       onClick={() => Router.replace(`/register`)}
                       style={{ width: '100%' }}
                     >
-                      Sign up
+                      Register here
                     </Button>
                   </div>
-                  <Link href='/login' Am>
+                  <Link href='/login' className='text-decoration-none'>
                     Already a member? Login.
                   </Link>
                 </div>
@@ -99,9 +96,50 @@ const Header = () => {
 
               {isAuth() && !isAuth().isAdmin && (
                 <>
-                  <Nav.Link as={Link} href='/profile'>
-                    My Profile
-                  </Nav.Link>
+                  <NavDropdown
+                    title={`Hello, ${isAuth().name}`}
+                    id='basic-nav-dropdown'
+                  >
+                    <NavDropdown.Item>
+                      <Link
+                        href='/profile/recipes'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Created Recipes
+                      </Link>
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item>
+                      <Link
+                        href='/profile/favorites'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Favorites
+                      </Link>
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item>
+                      <Link
+                        href='/profile/account/details'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Update Profile
+                      </Link>
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item>
+                      <Link
+                        href='/profile/account/changepassword'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Change Password
+                      </Link>
+                    </NavDropdown.Item>
+                  </NavDropdown>
 
                   <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
                 </>

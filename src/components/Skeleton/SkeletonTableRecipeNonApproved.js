@@ -16,7 +16,13 @@ const SkeletonTableRecipeNonApproved = () => {
         <Column
           field='code'
           header='Image'
-          style={{ width: '25%' }}
+          style={{ width: '15%', padding: '2.5em' }}
+          body={bodyTemplate}
+        ></Column>
+        <Column
+          field='name'
+          header='Type'
+          style={{ width: '10%' }}
           body={bodyTemplate}
         ></Column>
         <Column
@@ -28,30 +34,36 @@ const SkeletonTableRecipeNonApproved = () => {
         <Column
           field='category'
           header='Calories'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Carbs'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Protein'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Fat'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Total Time'
+          style={{ width: '15%' }}
+          body={bodyTemplate}
+        ></Column>
+        <Column
+          field='quantity'
+          header='Created At'
           style={{ width: '25%' }}
           body={bodyTemplate}
         ></Column>
@@ -60,6 +72,7 @@ const SkeletonTableRecipeNonApproved = () => {
           header='Approval'
           style={{ width: '25%' }}
           body={bodyTemplate}
+          sortable
         ></Column>
       </DataTable>
     </>

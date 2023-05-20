@@ -16,7 +16,13 @@ const SkeletonTableRecipeApproved = () => {
         <Column
           field='code'
           header='Image'
-          style={{ width: '25%' }}
+          style={{ width: '15%', padding: '2.5em' }}
+          body={bodyTemplate}
+        ></Column>
+        <Column
+          field='name'
+          header='Type'
+          style={{ width: '10%' }}
           body={bodyTemplate}
         ></Column>
         <Column
@@ -24,40 +30,47 @@ const SkeletonTableRecipeApproved = () => {
           header='Name'
           style={{ width: '25%' }}
           body={bodyTemplate}
+          sortable
         ></Column>
         <Column
           field='category'
           header='Calories'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Carbs'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Protein'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Fat'
-          style={{ width: '25%' }}
+          style={{ width: '5%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Total Time'
-          style={{ width: '25%' }}
+          style={{ width: '15%' }}
           body={bodyTemplate}
         ></Column>
         <Column
           field='quantity'
           header='Reviews'
+          style={{ width: '25%' }}
+          body={bodyTemplate}
+        ></Column>
+        <Column
+          field='quantity'
+          header='Favorites'
           style={{ width: '25%' }}
           body={bodyTemplate}
         ></Column>
