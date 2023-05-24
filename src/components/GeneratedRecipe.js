@@ -11,7 +11,7 @@ const GeneratedRecipe = ({ recipe }) => {
           href={`/recipe/${recipe.slug}`}
           style={{ textDecoration: 'none', color: 'black' }}
         >
-          <div className='img-hover-zoom '>
+          <div className='img-hover-zoom'>
             <Card.Img variant='top' src={recipe.main_image} alt={recipe.name} />
           </div>
           <Card.Body>

@@ -14,6 +14,7 @@ import { FilterMatchMode } from 'primereact/api';
 import { Tag } from 'primereact/tag';
 import SkeletonTableRecipeNonApproved from './Skeleton/SkeletonTableRecipeNonApproved';
 import { InputText } from 'primereact/inputtext';
+import Router, { withRouter } from 'next/router';
 
 const TableRecipeNonApproved = ({ username }) => {
   const [allNonApprovedRecipes, setNonApprovedRecipes] = useState([]);

@@ -1,6 +1,6 @@
 import FormContainer from '@/components/FormContainer';
 import { Button, Form, Row, Spinner } from 'react-bootstrap';
-
+import fetch from 'isomorphic-fetch';
 import React, { useEffect, useState } from 'react';
 import {
   authenticate,
@@ -14,11 +14,20 @@ import Message from '@/components/Message';
 import Link from 'next/link';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../config';
+import { upload, uploadImage } from '@/actions/uploadActions';
+
+const config = {
+  bucketName: 'keto-food-generator-bucket',
+  dirName: 'photos' /* optional */,
+  region: 'ap-northeast-1',
+  accessKeyId: 'AKIAQDTYZYQMKSSXCK32',
+  secretAccessKey: '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',
+};
 
 const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({
-    emailOrUsername: '',
-    password: '',
+    emailOrUsername: 'admin@example.com',
+    password: '8#762YyJ1Ww9',
     error: '',
     loading: false,
     message: '',
@@ -94,6 +103,7 @@ const LoginScreen = ({ router }) => {
   return (
     <>
       {head()}
+
       {showForm && (
         <FormContainer>
           <h1 className='text-center'>Login</h1>
@@ -133,7 +143,17 @@ const LoginScreen = ({ router }) => {
           </Form>
 
           <Row className='mt-4'>
-            <Link href='/login/password/forgot'>Forgot your password?</Link>
+            <Link
+              href='/login/password/forgot'
+              className='text-decoration-none'
+            >
+              Forgot your password?
+            </Link>
+          </Row>
+          <Row className='mt-3'>
+            <Link href='/register' className='text-decoration-none'>
+              Create a new account
+            </Link>
           </Row>
         </FormContainer>
       )}

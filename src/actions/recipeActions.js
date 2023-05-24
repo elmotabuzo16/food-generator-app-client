@@ -151,6 +151,36 @@ export const getFavorites = () => {
     .catch((err) => console.log(err));
 };
 
+export const listRelated = (recipe) => {
+  return fetch(`${API}/recipe/relatedCategory`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(recipe),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const listFeatured = (type) => {
+  return fetch(`${API}/recipe/getFeatured`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(type),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 // export const createRecipe = (token, recipe) => {
 //   return fetch(`${API}/recipe/create`, {
 //     method: 'POST',

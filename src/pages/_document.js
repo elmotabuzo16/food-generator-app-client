@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import { publicRuntimeConfig } from '../../next.config';
 
 export default function Document() {
   return (
@@ -12,6 +13,23 @@ export default function Document() {
           crossOrigin='anonymous'
           referrerPolicy='no-referrer'
         />
+        <script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-7RKXFKG7NZ'
+        ></script>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-7RKXFKG7NZ');
+              `,
+          }}
+        ></script>
+
         <script
           src='https://kit.fontawesome.com/7aa005f0fe.js'
           crossOrigin='anonymous'

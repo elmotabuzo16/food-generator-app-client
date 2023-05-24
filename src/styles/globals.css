@@ -181,3 +181,89 @@ body {
 .btn-heart i:hover {
   cursor: pointer;
 }
+
+.recipe-header__name {
+  font-family: 'proxima-nova', Helvetica, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 48px;
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+
+.recipe__description {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+ol > li:before {
+  content: 'Step ' counter(elementcounter) '. ';
+  counter-increment: elementcounter;
+  font-weight: bold;
+}
+
+ol {
+  list-style-type: none;
+  counter-reset: elementcounter;
+  padding-left: 0;
+}
+
+.recipe__steps__list {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#featured-meals .card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-decoration: none;
+  margin-top: -20px;
+}
+
+#featured-meals {
+  height: 100%;
+  background: linear-gradient(#f0f9f9, #f0f9f9, #f7f7f7);
+}
+
+#featured-meals header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0.375rem;
+  font-size: 2.25rem;
+}
+
+#featured-meals a {
+  margin: 20px 60px;
+}
+
+#featured-meals .meal-title {
+  color: #b5460f;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 0;
+  font-size: 13px;
+}
+
+#featured-meals .card:hover {
+  transform: translate(-2px, -2px);
+  /* box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.253) !important; */
+  box-shadow: 5px 5px 0 #fec445;
+}
+
+#featured-meals .row {
+  margin: 20px 20px;
+}
+
+.related-meal {
+  display: -webkit-box;
+  height: 310px;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}

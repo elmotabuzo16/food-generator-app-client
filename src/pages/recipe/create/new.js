@@ -17,6 +17,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
+import { uploadImage } from '@/actions/uploadActions';
 
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
 
@@ -56,21 +57,24 @@ const ProductCreateScreen = ({ router }) => {
   const [showForm, setShowForm] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [values, setValues] = useState({
-    name: '',
-    category: '',
+    name: 'test',
+    category: 'Keto',
     type: '',
     main_image: '',
-    calories: '',
-    carbs: '',
-    protein: '',
-    fat: '',
-    totalTime: '',
-    servingCount: '',
-    description: '',
+    calories: '325',
+    carbs: '6 g',
+    protein: '36 g',
+    fat: '18 g',
+    totalTime: '45 minutes',
+    servingCount: '4',
+    description: `Experience the perfect blend of keto-friendly goodness and juicy satisfaction with our Keto Juicy Pork Chop recipe. These tender, thick-cut pork chops are seasoned with a delectable combination of herbs and spices, ensuring a burst of flavor in every bite. Cooked to perfection, the succulent pork chops are seared to create a mouthwatering caramelized crust while retaining their natural juiciness. With its low-carb profile, this recipe aligns perfectly with your keto lifestyle, providing a satisfying and wholesome meal that's both delicious and nourishing. Whether you're following a ketogenic diet or simply looking for a healthy and flavorful pork chop dish, this Keto Juicy Pork Chops are sure to become a favorite on your menu`,
     loading: '',
     error: '',
     success: '',
   });
+
+  const [mealSnackOption, setMealSnackOption] = useState('');
+  const [categoryOption, setCategoryOption] = useState('');
 
   const {
     name,
@@ -89,13 +93,23 @@ const ProductCreateScreen = ({ router }) => {
     success,
   } = values;
 
+  const handleMealSnackChange = (event) => {
+    setMealSnackOption(event.target.value);
+    console.log(mealSnackOption);
+  };
+
+  const handleCategoryChange = (event) => {
+    setCategoryOption(event.target.value);
+    console.log(categoryOption);
+  };
+
   // Ingredients
 
   const [ingredientFields, setIngredientFields] = useState([
     { name: '', size: '', image: '' },
   ]);
 
-  const ingredientsInputHandler = (index, event) => {
+  const ingredientsInputHandler = async (index, event) => {
     const valueIngredients = [...ingredientFields];
 
     if (event.target.name === 'image') {
@@ -108,13 +122,8 @@ const ProductCreateScreen = ({ router }) => {
           return;
         }
       }
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        console.log(reader.result);
-        valueIngredients[index][event.target.name] = reader.result;
-      };
+      const url = await uploadImage(file);
+      valueIngredients[index][event.target.name] = url;
     } else {
       valueIngredients[index][event.target.name] = event.target.value;
     }
@@ -182,7 +191,6 @@ const ProductCreateScreen = ({ router }) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        console.log(reader.result);
         valueDirection[index][event.target.name] = reader.result;
       };
     } else {
@@ -215,14 +223,8 @@ const ProductCreateScreen = ({ router }) => {
         }
       }
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.onerror = (error) => {
-        console.log('Error: ', error);
-      };
+      const url = await uploadImage(file);
+      setSelectedImage(url);
     } else {
       setValues({ ...values, [e.target.name]: e.target.value, error: '' });
     }
@@ -278,10 +280,12 @@ const ProductCreateScreen = ({ router }) => {
 
     let token = isAuth().token;
 
+    console.log('test');
+
     const recipeData = {
       name,
       category,
-      type,
+      type: mealType,
       main_image,
       calories,
       carbs,
@@ -290,9 +294,9 @@ const ProductCreateScreen = ({ router }) => {
       totalTime,
       servingCount,
       description,
-      //   ingredients: ingredientFields,
-      //   servings: servingFields,
-      //   directions: directionFields,
+      ingredients: ingredientFields,
+      servings: servingFields,
+      directions: directionFields,
     };
 
     createFood(token, recipeData).then((data) => {
@@ -307,6 +311,13 @@ const ProductCreateScreen = ({ router }) => {
         console.log('success');
       }
     });
+  };
+
+  const [mealType, setMealType] = useState('');
+
+  const handleInputMealType = (e) => {
+    setMealType(e.target.value);
+    setValues({ ...values, type: e.target.value });
   };
 
   return (
@@ -335,34 +346,43 @@ const ProductCreateScreen = ({ router }) => {
                   <Form.Label>
                     <strong>Category</strong>
                   </Form.Label>
-                  <Form.Select
-                    as='select'
-                    value={category}
-                    name='category'
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter name'
+                    value={'Keto'}
+                    name='name'
                     onChange={handleInputChange}
-                    required
-                  >
-                    <option value='Meal'>Keto</option>
-                    <option value='Vegan'>Vegan</option>
-                  </Form.Select>
+                    disabled
+                  ></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId='recipeType' className='mb-3'>
-                  <Form.Label>
-                    <strong>Type of Meal</strong>
-                  </Form.Label>
-                  <Form.Select
+                <Form.Group controlId='formMealType'>
+                  <Form.Label>Type of Meal</Form.Label>
+                  <Form.Control
                     as='select'
+                    value={mealType}
+                    onChange={handleInputMealType}
+                  >
+                    <option value=''>Select a meal type</option>
+                    <option value='Snack'>Snack</option>
+                    <option value='Meal'>Meal</option>
+                    <option value='Dessert'>Dessert</option>
+                  </Form.Control>
+                </Form.Group>
+
+                {/* <Form.Group controlId='recipeType' className='mb-3'>
+                  <Form.Label>
+                    <strong>Type of meal</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter Type'
                     value={type}
                     name='type'
                     onChange={handleInputChange}
                     required
-                  >
-                    <option value='Meal'>Meal</option>
-                    <option value='Snack'>Side Dish/Snack</option>
-                  </Form.Select>
-                </Form.Group>
-
+                  ></Form.Control>
+                </Form.Group> */}
                 <Form.Group controlId='recipeName' className='mb-3'>
                   <Form.Label>
                     <strong>Recipe name</strong>
@@ -376,7 +396,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='recipeImage' className='mb-4'>
                   <Form.Label>
                     <strong>Image</strong>
@@ -386,10 +405,8 @@ const ProductCreateScreen = ({ router }) => {
                     name='main_image'
                     accept='image/*'
                     onChange={handleInputChange}
-                    required
                   />
                 </Form.Group>
-
                 {selectedImage && (
                   <>
                     <Form.Label>
@@ -403,7 +420,6 @@ const ProductCreateScreen = ({ router }) => {
                     />
                   </>
                 )}
-
                 <Form.Group controlId='recipeCalories' className='mb-3 mt-3'>
                   <Form.Label>
                     <strong>Calories</strong>
@@ -417,7 +433,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='recipeCarbs' className='mb-3'>
                   <Form.Label>
                     <strong>Carbs</strong>
@@ -431,7 +446,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='recipeProtein' className='mb-3'>
                   <Form.Label>
                     <strong>Protein</strong>
@@ -445,7 +459,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='recipeFat' className='mb-3'>
                   <Form.Label>
                     <strong>Fat</strong>
@@ -459,7 +472,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='recipeTotalTime' className='mb-3'>
                   <Form.Label>
                     <strong>Total Time</strong>
@@ -473,7 +485,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='servingCount' className='mb-3'>
                   <Form.Label>
                     <strong>Serving Count</strong>
@@ -487,7 +498,6 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-
                 <Form.Group controlId='description' className='mb-3'>
                   <Form.Label>
                     <strong>Description</strong>
@@ -526,7 +536,7 @@ const ProductCreateScreen = ({ router }) => {
                               onChange={(event) =>
                                 ingredientsInputHandler(index, event)
                               }
-                              required
+                              // required
                             ></Form.Control>
 
                             <Form.Label className='mt-2'>
@@ -540,7 +550,7 @@ const ProductCreateScreen = ({ router }) => {
                               onChange={(event) =>
                                 ingredientsInputHandler(index, event)
                               }
-                              required
+                              // required
                             ></Form.Control>
 
                             {/* <Form.Label className='mt-2'>
@@ -568,7 +578,6 @@ const ProductCreateScreen = ({ router }) => {
                                 onChange={(event) =>
                                   ingredientsInputHandler(index, event)
                                 }
-                                required
                               />
                             </Form.Group>
 
@@ -631,7 +640,7 @@ const ProductCreateScreen = ({ router }) => {
                               onChange={(event) =>
                                 servingsInputHandler(index, event)
                               }
-                              required
+                              // required
                             ></Form.Control>
 
                             <Form.Label className='mt-2'>
@@ -645,7 +654,7 @@ const ProductCreateScreen = ({ router }) => {
                               onChange={(event) =>
                                 servingsInputHandler(index, event)
                               }
-                              required
+                              // required
                             ></Form.Control>
 
                             <Button
@@ -696,7 +705,7 @@ const ProductCreateScreen = ({ router }) => {
                               onChange={(event) =>
                                 directionInputHandler(index, event)
                               }
-                              required
+                              // required
                             ></textarea>
 
                             {/* <Form.Label className='mt-2'>Image</Form.Label>
@@ -719,7 +728,6 @@ const ProductCreateScreen = ({ router }) => {
                                 onChange={(event) =>
                                   directionInputHandler(index, event)
                                 }
-                                required
                               />
                             </Form.Group>
 

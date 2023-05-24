@@ -4,11 +4,12 @@ import Upscaling from '@/components/Upscaling';
 import Generator from '@/components/Generator';
 import { useEffect } from 'react';
 import Head from 'next/head';
-import { APP_NAME, DOMAIN } from '../../config';
+import { API, APP_NAME, DOMAIN } from '../../config';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
+import FeaturedMeals from '@/components/FeaturedMeals';
 
-const Home = ({ router }) => {
+const Home = ({ router, relatedMeals, relatedSnacks }) => {
   const head = () => (
     <Head>
       <title> Keto Food Generator | Low Carb & Keto Meals</title>
@@ -54,7 +55,7 @@ const Home = ({ router }) => {
         <Container>
           <section id='homepage'>
             <Row className='col-md-8 offset-md-2'>
-              <h1>Get ready on your Keto Journey</h1>
+              <h1>Don't know what Keto Food to eat?</h1>
             </Row>
             <Row className='col-md-8 offset-md-2 mb-4 mt-3'>
               <p>
@@ -72,13 +73,43 @@ const Home = ({ router }) => {
           <section id='generator'>
             <Generator />
           </section>
-          <section id='upscalling'>
-            <Upscaling />
-          </section>
         </Container>
+        <section id='featured-meals' className='mt-4'>
+          <h3 className='pt-4 text-center'>Featured Meals</h3>
+          <FeaturedMeals relatedMeals={relatedMeals} />
+          <h3 className='pt-4 text-center'>Featured Snacks</h3>
+          <FeaturedMeals relatedMeals={relatedSnacks} />
+        </section>
+        <section id='upscalling'>
+          <Upscaling />
+        </section>{' '}
       </div>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const mealFetch = await fetch(`${API}/recipe/getFeatured`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ type: 'Meal' }), // Replace with your POST body data
+  });
+  const meal = await mealFetch.json();
+
+  const snackFetch = await fetch(`${API}/recipe/getFeatured`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ type: 'Snack' }), // Replace with your POST body data
+  });
+  const snack = await snackFetch.json();
+
+  return {
+    props: { relatedMeals: meal, relatedSnacks: snack },
+  };
+}
 
 export default withRouter(Home);
