@@ -8,7 +8,7 @@ const nextConfig = {
     DOMAIN_DEVELOPMENT: 'http://localhost:3000/',
     DOMAIN_PRODUCTION: 'https://ketofoodgenerator.com/',
     FB_APP_ID: '253159533892465',
-    PRODUCTION: false,
+    PRODUCTION: true,
   },
 };
 
