@@ -12,35 +12,33 @@ import {
 import Rating from '@/components/Rating';
 import { isAuth } from '@/actions/authActions';
 import Router, { withRouter } from 'next/router';
-import {
-  createRecipeReview,
-  listRelated,
-  loadSingleRecipe,
-} from '@/actions/recipeActions';
+import { createRecipeReview, listRelated } from '@/actions/recipeActions';
 import Loader from '@/components/Loader';
 import Message from '@/components/Message';
 import Head from 'next/head';
 import moment from 'moment';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import NutritionalDoughnutChart from '@/components/NutritionalDoughnutChart';
-import GeneratedRecipe from '@/components/GeneratedRecipe';
+import FeaturedMeals from '@/components/FeaturedMeals';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
     <Head>
-      <title>
-        {recipe.name} | {APP_NAME}
-      </title>
+      <title>{recipe.name} | Keto Food Generator</title>
       <meta name='description' content={recipe.description} />
       <link rel='canonical' href={`${DOMAIN}/recipe/${recipe.slug}`} />
-      <meta property='og:title' content={`${recipe.name}| ${APP_NAME}`} />
+      <meta
+        property='og:title'
+        content={`${recipe.name}| Keto Food Generator`}
+      />
       <meta property='og:description' content={recipe.description} />
       <meta property='og:type' content='webiste' />
       <meta property='og:url' content={`${DOMAIN}/recipe/${recipe.slug}`} />
-      <meta property='og:site_name' content={`${APP_NAME}`} />
+      <meta property='og:site_name' content={`Keto Food Generator`} />
 
       <meta property='og:image' content={`${DOMAIN}/${recipe.main_image}`} />
       <meta
@@ -52,16 +50,20 @@ const RecipeDetailScreen = ({ recipe, router }) => {
     </Head>
   );
 
+  const [loadingRelated, setLoadingRelated] = useState(false);
+
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      loadRelated();
+    }
+
     localStorage.setItem(
       'current_recipe',
       JSON.stringify({
         recipeSlug: recipe.slug,
       })
     );
-
-    loadRelated();
-  }, []);
+  }, [recipe._id]);
 
   const [reviewValue, setReviewValue] = useState({
     name: '',
@@ -72,7 +74,6 @@ const RecipeDetailScreen = ({ recipe, router }) => {
     message: '',
   });
 
-  const [singleRecipe, setSingleRecipe] = useState([]);
   const { name, rating, comment, error, loading, message } = reviewValue;
   const [relatedData, setRelatedData] = useState([]);
 
@@ -85,23 +86,14 @@ const RecipeDetailScreen = ({ recipe, router }) => {
   };
 
   const loadRelated = () => {
+    setLoadingRelated(true);
     const recipeData = { _id: recipe._id, type: recipe.type };
     listRelated(recipeData).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
         setRelatedData(data);
-        console.log(relatedData);
-      }
-    });
-  };
-
-  const initSingleRecipe = () => {
-    loadSingleRecipe(router.query.slug).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setSingleRecipe(data);
+        setLoadingRelated(false);
       }
     });
   };
@@ -268,19 +260,18 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               </aside>
             </Col>
           </Row>
+        </Container>
 
+        <section id='featured-meals' className='mt-4'>
           <Row>
-            {relatedData.map((r, i) => (
-              <div className='col-md-4' key={i}>
-                <article>
-                  {/* {JSON.stringify(relatedData)} */}
-                  {/* <GeneratedRecipe recipe={r} />
-                  <GeneratedRecipe recipe={r} /> */}
-                </article>
-              </div>
-            ))}
-          </Row>
+            <h3 className='pt-4 pb-5 text-center'>Related {recipe.type}s</h3>
+            {loadingRelated && <SkeletonCardThree />}
 
+            {!loadingRelated && <FeaturedMeals relatedMeals={relatedData} />}
+          </Row>
+        </section>
+
+        <Container>
           <Row>
             <Col md={12} className='container-sm'>
               <div className='comments__header'>
@@ -397,7 +388,7 @@ export async function getServerSideProps({ params }) {
   const data = await res.json();
 
   return {
-    props: { recipe: data, slug },
+    props: { recipe: data, slug, loadingRelated: false },
   };
 }
 

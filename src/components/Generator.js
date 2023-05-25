@@ -50,8 +50,7 @@ const Generator = () => {
                     }}
                   >
                     <option value='Meal'>Meal</option>
-                    <option value='Snack'>Snack</option>
-                    <option value='Dessert'>Dessert</option>
+                    <option value='Snack'>Snacks or Desserts</option>
                   </Form.Select>
                 </div>
               </div>

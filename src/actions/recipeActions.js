@@ -170,10 +170,9 @@ export const listFeatured = (type) => {
   return fetch(`${API}/recipe/getFeatured`, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(type),
+    body: JSON.stringify({ type: type }), // Replace with your POST body data
   })
     .then((response) => {
       return response.json();

@@ -1,8 +1,6 @@
-import { listFeatured } from '@/actions/recipeActions';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { Button, Card, Row } from 'react-bootstrap';
-import Rating from './Rating';
+import React from 'react';
+import { Card, Row } from 'react-bootstrap';
 
 const FeaturedMeals = ({ relatedMeals }) => {
   return (
@@ -26,7 +24,7 @@ const FeaturedMeals = ({ relatedMeals }) => {
                     <Card.Title className='meal-title'>
                       <strong>{meal.type.toUpperCase()}</strong>
                     </Card.Title>
-                    <Card.Title style={{ color: 'black', fontSize: '23px' }}>
+                    <Card.Title style={{ color: 'black', fontSize: '20px' }}>
                       {meal.name}
                     </Card.Title>
                     <Card.Text>

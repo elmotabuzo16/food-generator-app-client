@@ -2,12 +2,15 @@ import '@/styles/Home.module.css';
 import { Container, Row } from 'react-bootstrap';
 import Upscaling from '@/components/Upscaling';
 import Generator from '@/components/Generator';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { API, APP_NAME, DOMAIN } from '../../config';
-import Router from 'next/router';
-import { withRouter } from 'next/router';
+import Router, { withRouter } from 'next/router';
 import FeaturedMeals from '@/components/FeaturedMeals';
+import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
+import { listFeatured } from '@/actions/recipeActions';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 const Home = ({ router, relatedMeals, relatedSnacks }) => {
   const head = () => (
@@ -42,11 +45,43 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
     </Head>
   );
 
+  const [featuredMeal, setFeaturedMeal] = useState([]);
+  const [featuredMealLoading, setFeaturedMealLoading] = useState(false);
+  const [featuredSnack, setFeaturedSnack] = useState([]);
+  const [featuredSnackLoading, setFeaturedSnackLoading] = useState(false);
+
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('current_recipe');
+
+      loadFeaturedMeals();
+      loadFeaturedSnacks();
     }
   }, []);
+
+  const loadFeaturedMeals = () => {
+    setFeaturedMealLoading(true);
+    listFeatured('Meal').then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setFeaturedMeal(data);
+        setFeaturedMealLoading(false);
+      }
+    });
+  };
+
+  const loadFeaturedSnacks = () => {
+    setFeaturedSnackLoading(true);
+    listFeatured('Snack').then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setFeaturedSnack(data);
+        setFeaturedSnackLoading(false);
+      }
+    });
+  };
 
   return (
     <>
@@ -75,10 +110,17 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
           </section>
         </Container>
         <section id='featured-meals' className='mt-4'>
-          <h3 className='pt-4 text-center'>Featured Meals</h3>
-          <FeaturedMeals relatedMeals={relatedMeals} />
-          <h3 className='pt-4 text-center'>Featured Snacks</h3>
-          <FeaturedMeals relatedMeals={relatedSnacks} />
+          <h3 className='pt-4 pb-5 text-center'>Featured Meals</h3>
+          {featuredMealLoading && <SkeletonCardFour />}
+          {!featuredMealLoading && (
+            <FeaturedMeals relatedMeals={featuredMeal} />
+          )}
+
+          <h3 className='pt-4 pb-5 text-center'>Featured Snacks</h3>
+          {featuredSnackLoading && <SkeletonCardFour />}
+          {!featuredSnackLoading && (
+            <FeaturedMeals relatedMeals={featuredSnack} />
+          )}
         </section>
         <section id='upscalling'>
           <Upscaling />
@@ -87,29 +129,5 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
     </>
   );
 };
-
-export async function getServerSideProps() {
-  const mealFetch = await fetch(`${API}/recipe/getFeatured`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ type: 'Meal' }), // Replace with your POST body data
-  });
-  const meal = await mealFetch.json();
-
-  const snackFetch = await fetch(`${API}/recipe/getFeatured`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ type: 'Snack' }), // Replace with your POST body data
-  });
-  const snack = await snackFetch.json();
-
-  return {
-    props: { relatedMeals: meal, relatedSnacks: snack },
-  };
-}
 
 export default withRouter(Home);

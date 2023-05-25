@@ -1,11 +1,8 @@
 import { loadAllApprovedRecipes } from '@/actions/recipeActions';
-import Rating from '@/components/Rating';
 import TableRecipeApproved from '@/components/TableRecipeApproved';
-import TableApproved from '@/components/TableRecipeApproved';
-import Link from 'next/link';
 import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../config';
@@ -72,6 +69,7 @@ const Recipes = ({ router }) => {
   return (
     <>
       {head()}
+
       <Container>
         <Row>
           <TableRecipeApproved allRecipes={allRecipes} loading={loading} />

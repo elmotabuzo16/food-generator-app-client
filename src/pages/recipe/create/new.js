@@ -364,9 +364,8 @@ const ProductCreateScreen = ({ router }) => {
                     onChange={handleInputMealType}
                   >
                     <option value=''>Select a meal type</option>
-                    <option value='Snack'>Snack</option>
                     <option value='Meal'>Meal</option>
-                    <option value='Dessert'>Dessert</option>
+                    <option value='Snack'>Snack or Desserts</option>
                   </Form.Control>
                 </Form.Group>
 
