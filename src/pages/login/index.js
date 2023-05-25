@@ -15,7 +15,7 @@ import { APP_NAME, DOMAIN } from '../../../config';
 
 const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({
-    emailOrUsername: 'admin@example.com',
+    emailOrUsername: '',
     password: '',
     error: '',
     loading: false,
