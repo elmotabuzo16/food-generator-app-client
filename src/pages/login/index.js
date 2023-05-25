@@ -1,6 +1,5 @@
 import FormContainer from '@/components/FormContainer';
 import { Button, Form, Row, Spinner } from 'react-bootstrap';
-import fetch from 'isomorphic-fetch';
 import React, { useEffect, useState } from 'react';
 import {
   authenticate,
@@ -9,20 +8,10 @@ import {
   signin,
 } from '@/actions/authActions';
 import Router, { withRouter } from 'next/router';
-import Loader from '@/components/Loader';
 import Message from '@/components/Message';
 import Link from 'next/link';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../config';
-import { upload, uploadImage } from '@/actions/uploadActions';
-
-const config = {
-  bucketName: 'keto-food-generator-bucket',
-  dirName: 'photos' /* optional */,
-  region: 'ap-northeast-1',
-  accessKeyId: 'AKIAQDTYZYQMKSSXCK32',
-  secretAccessKey: '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',
-};
 
 const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({

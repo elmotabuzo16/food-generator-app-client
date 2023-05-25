@@ -7,10 +7,10 @@ import Head from 'next/head';
 import { API, APP_NAME, DOMAIN } from '../../config';
 import Router, { withRouter } from 'next/router';
 import FeaturedMeals from '@/components/FeaturedMeals';
-import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
 import { listFeatured } from '@/actions/recipeActions';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
+import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
 const Home = ({ router, relatedMeals, relatedSnacks }) => {
   const head = () => (
@@ -111,13 +111,13 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
         </Container>
         <section id='featured-meals' className='mt-4'>
           <h3 className='pt-4 pb-5 text-center'>Featured Meals</h3>
-          {featuredMealLoading && <SkeletonCardFour />}
+          {featuredMealLoading && <SkeletonCardThree />}
           {!featuredMealLoading && (
             <FeaturedMeals relatedMeals={featuredMeal} />
           )}
 
           <h3 className='pt-4 pb-5 text-center'>Featured Snacks</h3>
-          {featuredSnackLoading && <SkeletonCardFour />}
+          {featuredSnackLoading && <SkeletonCardThree />}
           {!featuredSnackLoading && (
             <FeaturedMeals relatedMeals={featuredSnack} />
           )}

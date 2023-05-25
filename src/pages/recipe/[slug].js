@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API, APP_NAME, DOMAIN, FB_APP_ID } from '../../../config';
+import { API, DOMAIN, FB_APP_ID } from '../../../config';
 import {
   Button,
   Col,
