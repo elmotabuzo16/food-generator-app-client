@@ -4,7 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 const SkeletonTableRecipeApproved = () => {
-  const items = Array.from({ length: 5 }, (v, i) => i);
+  const items = Array.from({ length: 7 }, (v, i) => i);
 
   const bodyTemplate = () => {
     return <Skeleton></Skeleton>;

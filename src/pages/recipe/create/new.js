@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -18,6 +18,7 @@ import 'primereact/resources/primereact.min.css';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
 import { uploadImage } from '@/actions/uploadActions';
+import { getTags } from '@/actions/tagActions';
 
 const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
 
@@ -29,7 +30,7 @@ const ProductCreateScreen = ({ router }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
-      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <link rel='canonical' href={`${DOMAIN}/${router.pathname}`} />
       <meta
         property='og:title'
         content={`Create a new recipe | Keto Food Generator`}
@@ -39,18 +40,12 @@ const ProductCreateScreen = ({ router }) => {
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
       <meta property='og:type' content='webiste' />
-      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:url' content={`${DOMAIN}/${router.pathname}`} />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
-      <meta
-        property='og:image'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta
-        property='og:image:secure_url'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta property='og:image:type' content='image/jpg' />
+      <meta property='og:image' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:secure_url' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:type' content='image/png' />
     </Head>
   );
 
@@ -73,9 +68,6 @@ const ProductCreateScreen = ({ router }) => {
     success: '',
   });
 
-  const [mealSnackOption, setMealSnackOption] = useState('');
-  const [categoryOption, setCategoryOption] = useState('');
-
   const {
     name,
     category,
@@ -91,17 +83,8 @@ const ProductCreateScreen = ({ router }) => {
     loading,
     error,
     success,
+    recipeTags,
   } = values;
-
-  const handleMealSnackChange = (event) => {
-    setMealSnackOption(event.target.value);
-    console.log(mealSnackOption);
-  };
-
-  const handleCategoryChange = (event) => {
-    setCategoryOption(event.target.value);
-    console.log(categoryOption);
-  };
 
   // Ingredients
 
@@ -129,8 +112,6 @@ const ProductCreateScreen = ({ router }) => {
     }
 
     setIngredientFields(valueIngredients);
-
-    console.log(valueIngredients);
   };
 
   const addIngredientFields = () => {
@@ -168,7 +149,7 @@ const ProductCreateScreen = ({ router }) => {
     setServingFields(updatedFields);
   };
 
-  // Directions / steps
+  // Directions / Steps
 
   const [directionFields, setDirectionFields] = useState([
     { description: '', image: '' },
@@ -210,6 +191,7 @@ const ProductCreateScreen = ({ router }) => {
     setDirectionFields(updatedFields);
   };
 
+  // Main Code
   const handleInputChange = async (e) => {
     if (e.target.name === 'main_image') {
       const file = e.target.files[0];
@@ -228,8 +210,42 @@ const ProductCreateScreen = ({ router }) => {
     } else {
       setValues({ ...values, [e.target.name]: e.target.value, error: '' });
     }
+  };
 
-    console.log(values);
+  // Meal Type
+  const [mealType, setMealType] = useState('');
+
+  const handleInputMealType = (e) => {
+    setMealType(e.target.value);
+    setValues({ ...values, type: e.target.value });
+  };
+
+  // Tags
+
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    initTags();
+  }, [router, selectedTags]);
+
+  const initTags = () => {
+    getTags().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setTags(data);
+      }
+    });
+  };
+
+  const handleTagChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedTags([...selectedTags, value]);
+    } else {
+      setSelectedTags(selectedTags.filter((tag) => tag !== value));
+    }
   };
 
   const submitHandler = async (e) => {
@@ -251,6 +267,7 @@ const ProductCreateScreen = ({ router }) => {
       ingredients: ingredientFields,
       servings: servingFields,
       directions: directionFields,
+      tags: selectedTags,
     };
 
     if (main_image.length === 0) {
@@ -258,7 +275,6 @@ const ProductCreateScreen = ({ router }) => {
     }
 
     createFood(foodRecipe).then((data) => {
-      console.log();
       if (data.error) {
         setValues({ ...values, loading: false, error: data.error });
         console.log(data.error);
@@ -272,52 +288,6 @@ const ProductCreateScreen = ({ router }) => {
         setShowForm(false);
       }
     });
-  };
-
-  const submitTestHandler = (e) => {
-    e.preventDefault();
-    setValues({ ...values, loading: true, error: '' });
-
-    let token = isAuth().token;
-
-    console.log('test');
-
-    const recipeData = {
-      name,
-      category,
-      type: mealType,
-      main_image,
-      calories,
-      carbs,
-      protein,
-      fat,
-      totalTime,
-      servingCount,
-      description,
-      ingredients: ingredientFields,
-      servings: servingFields,
-      directions: directionFields,
-    };
-
-    createFood(token, recipeData).then((data) => {
-      if (data.error) {
-        setValues({
-          ...values,
-          loading: false,
-          error: data.error,
-          message: data.message,
-        });
-      } else {
-        console.log('success');
-      }
-    });
-  };
-
-  const [mealType, setMealType] = useState('');
-
-  const handleInputMealType = (e) => {
-    setMealType(e.target.value);
-    setValues({ ...values, type: e.target.value });
   };
 
   return (
@@ -356,8 +326,10 @@ const ProductCreateScreen = ({ router }) => {
                   ></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId='formMealType'>
-                  <Form.Label>Type of Meal</Form.Label>
+                <Form.Group controlId='formMealType' className='mb-3'>
+                  <Form.Label>
+                    <strong>Type of Meal</strong>
+                  </Form.Label>
                   <Form.Control
                     as='select'
                     value={mealType}
@@ -369,19 +341,6 @@ const ProductCreateScreen = ({ router }) => {
                   </Form.Control>
                 </Form.Group>
 
-                {/* <Form.Group controlId='recipeType' className='mb-3'>
-                  <Form.Label>
-                    <strong>Type of meal</strong>
-                  </Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='Enter Type'
-                    value={type}
-                    name='type'
-                    onChange={handleInputChange}
-                    required
-                  ></Form.Control>
-                </Form.Group> */}
                 <Form.Group controlId='recipeName' className='mb-3'>
                   <Form.Label>
                     <strong>Recipe name</strong>
@@ -395,6 +354,7 @@ const ProductCreateScreen = ({ router }) => {
                     required
                   ></Form.Control>
                 </Form.Group>
+
                 <Form.Group controlId='recipeImage' className='mb-4'>
                   <Form.Label>
                     <strong>Image</strong>
@@ -509,12 +469,12 @@ const ProductCreateScreen = ({ router }) => {
                     name='description'
                     onChange={handleInputChange}
                     required
-                    rows={5}
+                    rows={15}
                   ></textarea>
                 </Form.Group>
               </Col>
 
-              <Col md={8}>
+              <Col md={6}>
                 <Form.Label>
                   <strong>Ingredients</strong>
                 </Form.Label>
@@ -756,6 +716,22 @@ const ProductCreateScreen = ({ router }) => {
                     ))}
                   </Container>
                 </Card>
+              </Col>
+
+              <Col md={2}>
+                <Form.Group controlId='tags'>
+                  <Form.Label>Tags</Form.Label>
+                  {tags.map((tag) => (
+                    <Form.Check
+                      key={tag._id}
+                      type='checkbox'
+                      label={tag.name}
+                      value={tag._id}
+                      checked={selectedTags.includes(tag._id)}
+                      onChange={handleTagChange}
+                    />
+                  ))}
+                </Form.Group>
               </Col>
             </Row>
 

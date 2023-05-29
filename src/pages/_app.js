@@ -3,7 +3,8 @@ import '@/styles/bootstrap.min.css';
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import dynamic from 'next/dynamic';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 export default function App({ Component, pageProps }) {
   return (

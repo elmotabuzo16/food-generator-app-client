@@ -4,7 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 const SkeletonTableRecipeNonApproved = () => {
-  const items = Array.from({ length: 5 }, (v, i) => i);
+  const items = Array.from({ length: 7 }, (v, i) => i);
 
   const bodyTemplate = () => {
     return <Skeleton></Skeleton>;
@@ -73,6 +73,12 @@ const SkeletonTableRecipeNonApproved = () => {
           style={{ width: '25%' }}
           body={bodyTemplate}
           sortable
+        ></Column>
+        <Column
+          field='quantity'
+          header='Edit'
+          style={{ width: '25%' }}
+          body={bodyTemplate}
         ></Column>
       </DataTable>
     </>

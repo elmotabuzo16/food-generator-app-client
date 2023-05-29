@@ -6,6 +6,7 @@ import {
   NavDropdown,
   Form,
   Button,
+  Image,
 } from 'react-bootstrap';
 import Link from 'next/link';
 import { isAuth, logout } from '@/actions/authActions';
@@ -42,7 +43,7 @@ const Header = () => {
         <Container>
           <Nav.Link as={Link} href='/'>
             <Navbar.Brand className='header__title' style={{ color: 'white' }}>
-              Keto Food Generator
+              <Image src='../../logo.png' height={60} />
             </Navbar.Brand>
           </Nav.Link>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />

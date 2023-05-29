@@ -1,5 +1,5 @@
 import FormContainer from '@/components/FormContainer';
-import { Button, Form, Row, Spinner } from 'react-bootstrap';
+import { Button, Form, Image, Row, Spinner } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import {
   authenticate,
@@ -12,11 +12,12 @@ import Message from '@/components/Message';
 import Link from 'next/link';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../config';
+import { InputText } from 'primereact/inputtext';
 
 const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({
-    emailOrUsername: '',
-    password: '',
+    emailOrUsername: 'admin@example.com',
+    password: '8#762YyJ1Ww9',
     error: '',
     loading: false,
     message: '',
@@ -30,25 +31,19 @@ const LoginScreen = ({ router }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
-      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <link rel='canonical' href={`${DOMAIN}/${router.pathname}`} />
       <meta property='og:title' content={`Login | Keto Food Generator`} />
       <meta
         property='og:description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
       <meta property='og:type' content='webiste' />
-      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:url' content={`${DOMAIN}/${router.pathname}`} />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
-      <meta
-        property='og:image'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta
-        property='og:image:secure_url'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta property='og:image:type' content='image/jpg' />
+      <meta property='og:image' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:secure_url' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:type' content='image/png' />
     </Head>
   );
 
@@ -95,7 +90,13 @@ const LoginScreen = ({ router }) => {
 
       {showForm && (
         <FormContainer>
-          <h1 className='text-center'>Login</h1>
+          <h3 className='text-center'>
+            <Image src='../../logo_top.png' height={60} />
+            <div>
+              <p>Welcome Back</p>
+            </div>
+          </h3>
+          <p className='text-center'>Please sign in below to get started.</p>
           {error && <Message variant='danger'>{error}</Message>}
           {loading && (
             <Message variant='info'>

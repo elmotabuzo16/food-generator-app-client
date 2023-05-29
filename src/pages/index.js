@@ -12,7 +12,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
-const Home = ({ router, relatedMeals, relatedSnacks }) => {
+const Home = ({ router }) => {
   const head = () => (
     <Head>
       <title> Keto Food Generator | Low Carb & Keto Meals</title>
@@ -20,7 +20,7 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
-      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <link rel='canonical' href={`${DOMAIN}/${router.pathname}`} />
       <meta
         property='og:title'
         content={`${APP_NAME} | Low Carb & Keto Meals`}
@@ -30,18 +30,12 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
       <meta property='og:type' content='webiste' />
-      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:url' content={`${DOMAIN}/${router.pathname}`} />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
-      <meta
-        property='og:image'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta
-        property='og:image:secure_url'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta property='og:image:type' content='image/jpg' />
+      <meta property='og:image' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:secure_url' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:type' content='image/png' />
     </Head>
   );
 
@@ -86,6 +80,7 @@ const Home = ({ router, relatedMeals, relatedSnacks }) => {
   return (
     <>
       {head()}
+
       <div id='homescreen'>
         <Container>
           <section id='homepage'>

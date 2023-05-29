@@ -7,6 +7,7 @@ import Admin from '@/components/Admin';
 import Loader from '@/components/Loader';
 import TableRecipeApproved from '@/components/TableRecipeApproved';
 import TableRecipeNonApproved from '@/components/TableRecipeNonApproved';
+import Tags from '@/components/Tags';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 
@@ -68,6 +69,9 @@ const AdminPage = () => {
                 {!loading && (
                   <TableRecipeApproved allRecipes={allApprovedRecipes} />
                 )}
+              </Tab>
+              <Tab eventKey='tab-3' title='Tags'>
+                <Tags />
               </Tab>
             </Tabs>
           </Col>

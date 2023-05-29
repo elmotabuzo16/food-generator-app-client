@@ -22,6 +22,8 @@ import FeaturedMeals from '@/components/FeaturedMeals';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
+import Link from 'next/link';
+import { classNames } from 'primereact/utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,7 +35,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
       <link rel='canonical' href={`${DOMAIN}/recipe/${recipe.slug}`} />
       <meta
         property='og:title'
-        content={`${recipe.name}| Keto Food Generator`}
+        content={`${recipe.name} | Keto Food Generator`}
       />
       <meta property='og:description' content={recipe.description} />
       <meta property='og:type' content='webiste' />
@@ -45,7 +47,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
         property='og:image:secure_url'
         content={`${DOMAIN}/${recipe.main_image}`}
       />
-      <meta property='og:image:type' content='image/jpg' />
+      <meta property='og:image:type' content='image/png' />
       <meta property='fb:app_id' content={`${FB_APP_ID}`} />
     </Head>
   );
@@ -177,17 +179,31 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
               </div>
               <hr />
-              <Rating
-                value={recipe.rating}
-                text={` ${recipe.numReviews} ratings`}
-              />
+              {recipe.rating !== 0 && (
+                <Rating
+                  value={recipe.rating}
+                  text={` ${recipe.numReviews} ratings`}
+                />
+              )}
               <p itemProp='description' className='recipe__description'>
                 {recipe.description}
               </p>
+              <div className='mt-3'>
+                {recipe.tags.map((t, i) => (
+                  <Link
+                    href={`/tag/${t.slug}`}
+                    className='text-decoration-none'
+                    key={i}
+                  >
+                    <Button className='pill'>{t.name}</Button>
+                  </Link>
+                ))}
+              </div>
+
               <Image
                 itemProp='image'
                 src={recipe.main_image}
-                className='article-main-image'
+                className='article-main-image mt-4'
                 fluid
                 style={{ height: '500px', maxWidth: 'auto' }}
               />

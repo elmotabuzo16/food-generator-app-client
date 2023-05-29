@@ -5,7 +5,7 @@ import Message from '@/components/Message';
 import Link from 'next/link';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Form, Image, Row, Spinner } from 'react-bootstrap';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../config';
@@ -31,7 +31,7 @@ const index = ({ router }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
-      <link rel='canonical' href={`${DOMAIN}${router.pathname}`} />
+      <link rel='canonical' href={`${DOMAIN}/${router.pathname}`} />
       <meta
         property='og:title'
         content={`Register for a free account | Keto Food Generator`}
@@ -41,18 +41,12 @@ const index = ({ router }) => {
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
       <meta property='og:type' content='webiste' />
-      <meta property='og:url' content={`${DOMAIN}${router.pathname}`} />
+      <meta property='og:url' content={`${DOMAIN}/${router.pathname}`} />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
-      <meta
-        property='og:image'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta
-        property='og:image:secure_url'
-        content={`${DOMAIN}/static/images/seoblog.jpg`}
-      />
-      <meta property='og:image:type' content='image/jpg' />
+      <meta property='og:image' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:secure_url' content={`${DOMAIN}/logo.png`} />
+      <meta property='og:image:type' content='image/png' />
     </Head>
   );
 
@@ -119,7 +113,13 @@ const index = ({ router }) => {
     <>
       {head()}
       <FormContainer>
-        <h1 className='text-center'>Create your account</h1>
+        <h3 className='text-center'>
+          <Image src='../../logo_top.png' height={60} />
+          <div>
+            <p>Create your account</p>
+          </div>
+        </h3>
+        <p className='text-center'>We need some basic information to begin.</p>
         {success && <Message variant='success my-4'>{success}</Message>}
         {message && <Message variant='danger my-4'>{message}</Message>}
         {error && <Message variant='danger my-4'>{error}</Message>}

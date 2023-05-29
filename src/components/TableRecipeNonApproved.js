@@ -15,6 +15,7 @@ import { Tag } from 'primereact/tag';
 import SkeletonTableRecipeNonApproved from './Skeleton/SkeletonTableRecipeNonApproved';
 import { InputText } from 'primereact/inputtext';
 import Router, { withRouter } from 'next/router';
+import Link from 'next/link';
 
 const TableRecipeNonApproved = ({ username }) => {
   const [allNonApprovedRecipes, setNonApprovedRecipes] = useState([]);
@@ -123,6 +124,21 @@ const TableRecipeNonApproved = ({ username }) => {
     return moment(recipe.createdAt).fromNow();
   };
 
+  const nameBodyTemplate = (recipe) => {
+    return <Link href={`/recipe/${recipe.slug}`}>{recipe.name}</Link>;
+  };
+
+  const editbodyTemplate = (recipe) => {
+    return (
+      <Button
+        className='btn btn-primary btn-sm mt-3'
+        onClick={() => Router.replace(`/recipe/update/${recipe.slug}`)}
+      >
+        Edit
+      </Button>
+    );
+  };
+
   return (
     <>
       {isAuth()?.isAdmin && (
@@ -159,7 +175,7 @@ const TableRecipeNonApproved = ({ username }) => {
           value={allNonApprovedRecipes}
           filters={filters}
           paginator
-          rows={5}
+          rows={7}
         >
           <Column
             header='Image'
@@ -167,7 +183,14 @@ const TableRecipeNonApproved = ({ username }) => {
             className='text-center'
           />
           <Column field='type' header='Type' />
-          <Column field='name' header='Name' />
+
+          <Column
+            field='name'
+            header='Name'
+            body={nameBodyTemplate}
+            sortable
+          ></Column>
+
           <Column field='calories' header='Calories' />
           <Column field='carbs' header='Carbs' />
           <Column field='protein' header='Protein' />
@@ -194,6 +217,7 @@ const TableRecipeNonApproved = ({ username }) => {
               sortable
             />
           )}
+          <Column field='edit' header='Edit' body={editbodyTemplate} />
         </DataTable>
       )}
     </>

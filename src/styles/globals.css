@@ -265,3 +265,20 @@ ol {
   overflow: hidden;
   object-fit: cover;
 }
+
+.pill {
+  font-size: 13px;
+  font-family: 'Raedex Pro', sans-serif;
+  padding: 0.5em 1.5em;
+  margin: 0.25em;
+  border-radius: 1em;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+}
+
+.pill:hover {
+  color: #18bc9c !important;
+}

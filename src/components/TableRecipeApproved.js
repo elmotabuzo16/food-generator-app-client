@@ -167,6 +167,17 @@ const TableRecipeApproved = ({ allRecipes, loading }) => {
 
     return <div className={stockClassName}>{recipe.userIdFavorite}</div>;
   };
+
+  const editbodyTemplate = (recipe) => {
+    return (
+      <Button
+        className='btn btn-primary btn-sm mt-3'
+        onClick={() => Router.replace(`/recipe/update/${recipe.slug}`)}
+      >
+        Edit
+      </Button>
+    );
+  };
   return (
     <>
       <div className='mt-4'>
@@ -198,7 +209,7 @@ const TableRecipeApproved = ({ allRecipes, loading }) => {
             value={allRecipes}
             filters={filters}
             paginator
-            rows={5}
+            rows={7}
             className='mt-4'
           >
             <Column
@@ -225,6 +236,9 @@ const TableRecipeApproved = ({ allRecipes, loading }) => {
               header='Favorites'
               body={favoriteBodyTemplate}
             />
+            {isAuth()?.isAdmin && (
+              <Column field='edit' header='Edit' body={editbodyTemplate} />
+            )}
           </DataTable>
           <ToastContainer />
         </>

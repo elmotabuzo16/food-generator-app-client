@@ -36,6 +36,23 @@ export const createFood = (foodRecipe) => {
     .catch((err) => console.log(err));
 };
 
+export const updateFood = (foodRecipe, slug) => {
+  const token = isAuth().token;
+  return fetch(`${API}/recipe/${slug}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(foodRecipe),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const loadAllApprovedRecipes = () => {
   return fetch(`${API}/recipe`, {
     method: 'GET',
@@ -73,6 +90,18 @@ export const loadAllNonApprovedRecipes = (username) => {
 
 export const loadSingleRecipe = (slug) => {
   return fetch(`${API}/recipe/${slug}`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const loadSingleRecipeForTags = (slug) => {
+  return fetch(`${API}/recipe/${slug}/tag`, {
     method: 'GET',
   })
     .then((response) => {
