@@ -16,8 +16,8 @@ import { InputText } from 'primereact/inputtext';
 
 const LoginScreen = ({ router }) => {
   const [values, setValues] = useState({
-    emailOrUsername: 'admin@example.com',
-    password: '8#762YyJ1Ww9',
+    emailOrUsername: '',
+    password: '',
     error: '',
     loading: false,
     message: '',
