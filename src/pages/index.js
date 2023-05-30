@@ -20,7 +20,7 @@ const Home = ({ router }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
-      <link rel='canonical' href={`${DOMAIN}/${router.pathname}`} />
+      <link rel='canonical' href={`${DOMAIN}`} />
       <meta
         property='og:title'
         content={`${APP_NAME} | Low Carb & Keto Meals`}
@@ -30,7 +30,7 @@ const Home = ({ router }) => {
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
       <meta property='og:type' content='webiste' />
-      <meta property='og:url' content={`${DOMAIN}/${router.pathname}`} />
+      <meta property='og:url' content={`${DOMAIN}`} />
       <meta property='og:site_name' content={`${APP_NAME}`} />
 
       <meta property='og:image' content={`${DOMAIN}/logo.png`} />
