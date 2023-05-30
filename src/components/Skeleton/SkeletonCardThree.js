@@ -5,10 +5,10 @@ import { Card, Row } from 'react-bootstrap';
 export default function SkeletonCardThree() {
   return (
     <>
-      <div className='card-list mt-2'>
+      <div className='card-list my-2'>
         <Row>
           <div className='col-md-4'>
-            <Card style={{ width: '20rem' }}>
+            <Card style={{ width: '20rem', marginBottom: '50px' }}>
               <Skeleton height={318} width='100%'></Skeleton>
 
               <Card.Body>
@@ -48,7 +48,7 @@ export default function SkeletonCardThree() {
 
         <Row>
           <div className='col-md-4'>
-            <Card style={{ width: '20rem' }}>
+            <Card style={{ width: '20rem', marginBottom: '50px' }}>
               <Skeleton height={318} width='100%'></Skeleton>
 
               <Card.Body>
@@ -88,7 +88,7 @@ export default function SkeletonCardThree() {
 
         <Row>
           <div className='col-md-4'>
-            <Card style={{ width: '20rem' }}>
+            <Card style={{ width: '20rem', marginBottom: '50px' }}>
               <Skeleton height={318} width='100%'></Skeleton>
 
               <Card.Body>

@@ -178,20 +178,10 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 <strong>Serving Size:</strong> {recipe.servingCount}
                 {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
               </div>
-              <hr />
-              {recipe.rating !== 0 && (
-                <Rating
-                  value={recipe.rating}
-                  text={` ${recipe.numReviews} ratings`}
-                />
-              )}
-              <p itemProp='description' className='recipe__description'>
-                {recipe.description}
-              </p>
               <div className='mt-3'>
                 {recipe.tags.map((t, i) => (
                   <Link
-                    href={`/tag/${t.slug}`}
+                    href={`/categories/recipes/${t.slug}`}
                     className='text-decoration-none'
                     key={i}
                   >
@@ -199,6 +189,18 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </Link>
                 ))}
               </div>
+
+              <hr />
+              {recipe.rating !== 0 && (
+                <Rating
+                  value={recipe.rating}
+                  text={` ${recipe.numReviews} ratings`}
+                />
+              )}
+
+              <p itemProp='description' className='recipe__description'>
+                {recipe.description}
+              </p>
 
               <Image
                 itemProp='image'

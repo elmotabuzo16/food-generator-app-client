@@ -29,3 +29,15 @@ export const createTag = (tag) => {
     })
     .catch((err) => {});
 };
+
+export const getRelatedRecipeTag = (slug) => {
+  return fetch(`${API}/tag/${slug}`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
