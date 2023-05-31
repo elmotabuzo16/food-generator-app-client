@@ -23,7 +23,14 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 import Link from 'next/link';
-import { classNames } from 'primereact/utils';
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from 'react-share';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -42,11 +49,8 @@ const RecipeDetailScreen = ({ recipe, router }) => {
       <meta property='og:url' content={`${DOMAIN}/recipe/${recipe.slug}`} />
       <meta property='og:site_name' content={`Keto Food Generator`} />
 
-      <meta property='og:image' content={`${DOMAIN}/${recipe.main_image}`} />
-      <meta
-        property='og:image:secure_url'
-        content={`${DOMAIN}/${recipe.main_image}`}
-      />
+      <meta property='og:image' content={`${recipe.main_image}`} />
+      <meta property='og:image:secure_url' content={`${recipe.main_image}`} />
       <meta property='og:image:type' content='image/png' />
       <meta property='fb:app_id' content={`${FB_APP_ID}`} />
     </Head>
@@ -167,12 +171,12 @@ const RecipeDetailScreen = ({ recipe, router }) => {
       <article className='mt-3'>
         <Container>
           <Row>
-            <Col md={9}>
+            <Col md={8}>
               <h1 itemProp='name' className='recipe-header__name'>
                 {recipe.name}
               </h1>
               <div>
-                <p>
+                <p itemProp='cookTime'>
                   <strong>Total Time:</strong> {recipe.totalTime}
                 </p>
                 <strong>Serving Size:</strong> {recipe.servingCount}
@@ -184,6 +188,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                     href={`/categories/recipes/${t.slug}`}
                     className='text-decoration-none'
                     key={i}
+                    itemProp='recipeCategory'
                   >
                     <Button className='pill'>{t.name}</Button>
                   </Link>
@@ -193,6 +198,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               <hr />
               {recipe.rating !== 0 && (
                 <Rating
+                  itemProp='aggregateRating'
                   value={recipe.rating}
                   text={` ${recipe.numReviews} ratings`}
                 />
@@ -231,7 +237,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                         className='ingredient-image'
                       />
                     )}
-                    <p className='ingredient-name'>{ingredient.name}</p>
+                    <p className='ingredient-name'> {ingredient.name}</p>
                     <p className='ingredient-size-unit ms-auto'>
                       {ingredient.size} {ingredient.unit}
                     </p>
@@ -265,16 +271,25 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               <hr />
               <ul>
                 {recipe.servings.map((serving) => (
-                  <li key={serving._id} className='mt-3'>
+                  <li key={serving._id} className='mt-3' itemProp='nutrition'>
                     {serving.name} - {serving.size} {serving.unit}
                   </li>
                 ))}
               </ul>
             </Col>
 
-            <Col md={3}>
+            <Col md={4}>
               <aside>
-                <p></p>
+                <div className='my-3' style={{ fontSize: '15px' }}>
+                  <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
+                    <FacebookIcon size={32} round /> &nbsp;Share on Facebook
+                  </FacebookShareButton>
+                </div>
+                <div className='mb-3' style={{ fontSize: '15px' }}>
+                  <TwitterShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
+                    <TwitterIcon size={32} round /> &nbsp;Share on Twitter
+                  </TwitterShareButton>
+                </div>
               </aside>
             </Col>
           </Row>
