@@ -13,6 +13,10 @@ export default function Document() {
           crossOrigin='anonymous'
           referrerPolicy='no-referrer'
         />
+
+        <link rel='icon' type='image/png' sizes='32x32' href='/favicon.ico' />
+        <link rel='icon' type='image/png' sizes='16x16' href='/favicon.ico' />
+
         <script
           async
           src='https://www.googletagmanager.com/gtag/js?id=G-7RKXFKG7NZ'
