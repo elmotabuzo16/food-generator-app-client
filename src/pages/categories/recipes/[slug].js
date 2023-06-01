@@ -8,33 +8,26 @@ import 'primereact/resources/primereact.min.css';
 import { Skeleton } from 'primereact/skeleton';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
-const TagSlug = ({ router }) => {
-  const [recipes, setRecipes] = useState([{}]);
+const TagSlug = ({ router, slug }) => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [values, setValues] = useState({
-    loading: false,
-    error: '',
-    success: '',
-  });
-
-  const { loading, error, success } = values;
+  const initRecipeTags = () => {
+    setLoading(true);
+    getRelatedRecipeTag(slug).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+        setLoading(false);
+      } else {
+        setRecipes(data);
+        setLoading(false);
+      }
+    });
+  };
 
   useEffect(() => {
     initRecipeTags();
   }, []);
-
-  const initRecipeTags = () => {
-    setValues({ ...values, loading: true });
-    console.log(router.query.slug);
-    getRelatedRecipeTag(router.query.slug).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setRecipes(data);
-        setValues({ ...values, loading: false });
-      }
-    });
-  };
 
   return (
     <>
@@ -43,7 +36,7 @@ const TagSlug = ({ router }) => {
           className='text-center mt-4'
           style={{ textTransform: 'capitalize' }}
         >
-          {router.query.slug}
+          {slug}
         </h3>
         {loading && (
           <>
@@ -148,5 +141,13 @@ const TagSlug = ({ router }) => {
     </>
   );
 };
+export async function getServerSideProps({ params }) {
+  // Fetch data for the page with the given slug
+  const { slug } = params;
+
+  return {
+    props: { slug },
+  };
+}
 
 export default withRouter(TagSlug);

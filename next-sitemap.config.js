@@ -6,6 +6,7 @@ module.exports = {
     additionalSitemaps: [
       `https://www.ketofoodgenerator.com/sitemap.xml`,
       `https://www.ketofoodgenerator.com/server-sitemap.xml`,
+      `https://www.ketofoodgenerator.com/categories-sitemap.xml`,
     ],
   },
 };

@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.ketofoodgenerator.com
+
+# Sitemaps
+Sitemap: https://www.ketofoodgenerator.com/sitemap.xml
+Sitemap: https://www.ketofoodgenerator.com/server-sitemap.xml
+Sitemap: https://www.ketofoodgenerator.com/categories-sitemap.xml

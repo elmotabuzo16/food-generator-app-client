@@ -26,13 +26,10 @@ import Link from 'next/link';
 import {
   FacebookIcon,
   FacebookShareButton,
-  PinterestIcon,
-  PinterestShareButton,
   TwitterIcon,
   TwitterShareButton,
 } from 'react-share';
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { Tag } from 'primereact/tag';
 
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
@@ -138,32 +135,6 @@ const RecipeDetailScreen = ({ recipe, router }) => {
     });
   };
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    cutout: '70%', // Adjust the cutout percentage to control the size of the center hole
-    plugins: {
-      doughnutlabel: {
-        labels: [
-          {
-            text: 'Calories',
-            font: {
-              size: '20',
-              weight: 'bold',
-            },
-          },
-          {
-            text: '500', // Replace with the actual total calorie value
-            font: {
-              size: '24',
-              weight: 'bold',
-            },
-          },
-        ],
-      },
-    },
-  };
-
   return (
     <div itemScope itemType='http://schema.org/Recipe'>
       {head()}
@@ -172,17 +143,23 @@ const RecipeDetailScreen = ({ recipe, router }) => {
         <Container>
           <Row>
             <Col md={8}>
-              <h1 itemProp='name' className='recipe-header__name'>
-                {recipe.name}
-              </h1>
+              <div>
+                <h1 itemProp='name' className='recipe-header__name'>
+                  {recipe.name}
+                </h1>
+              </div>
+
+              <div className='mb-4'></div>
               <div>
                 <p itemProp='cookTime'>
-                  <strong>Total Time:</strong> {recipe.totalTime}
+                  <strong> &nbsp;&nbsp;Total Time:</strong> {recipe.totalTime}
+                  <strong>&nbsp;&nbsp;Serving Size:</strong>{' '}
+                  {recipe.servingCount}
+                  {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
                 </p>
-                <strong>Serving Size:</strong> {recipe.servingCount}
-                {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
               </div>
-              <div className='mt-3'>
+              <div className='mt-3' style={{ display: 'flex' }}>
+                <p className='pill2'>{recipe.type}</p>
                 {recipe.tags.map((t, i) => (
                   <Link
                     href={`/categories/recipes/${t.slug}`}
@@ -280,6 +257,14 @@ const RecipeDetailScreen = ({ recipe, router }) => {
 
             <Col md={4}>
               <aside>
+                {isAuth()?.isAdmin && (
+                  <>
+                    <Link href={`/recipe/update/${recipe.slug}`}>
+                      <Button>Edit Recipe</Button>
+                    </Link>
+                  </>
+                )}
+
                 <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
