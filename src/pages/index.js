@@ -88,16 +88,16 @@ const Home = ({ router }) => {
               <h1>Don't know what Keto Food to eat?</h1>
             </Row>
             <Row className='col-md-8 offset-md-2 mb-4 mt-3'>
-              <p>
+              <div>
                 Keto Food Generator is a comprehensive platform that provides
                 users with a meal planner and nutritional information to help
                 them follow the ketogenic diet with ease and success.
-              </p>
-              <p>
+              </div>
+              <div>
                 You can generate your meal plan quickly and easily within
                 seconds.
                 <strong>&nbsp;Lets get cooking! </strong>
-              </p>
+              </div>
             </Row>
           </section>
           <section id='generator'>

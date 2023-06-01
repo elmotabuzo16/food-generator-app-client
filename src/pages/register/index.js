@@ -115,9 +115,7 @@ const index = ({ router }) => {
       <FormContainer>
         <h3 className='text-center'>
           <Image src='../../logo_top.png' height={60} />
-          <div>
-            <p>Create your account</p>
-          </div>
+          <div>Create your account</div>
         </h3>
         <p className='text-center'>We need some basic information to begin.</p>
         {success && <Message variant='success my-4'>{success}</Message>}

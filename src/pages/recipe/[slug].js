@@ -302,9 +302,9 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                     Ratings and Comments
                   </h4>
                   {recipe.reviews.length === 0 && (
-                    <p>
+                    <div>
                       There are no ratings/comments available. Create below.
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>

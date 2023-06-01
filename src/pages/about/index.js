@@ -36,30 +36,30 @@ const AboutScreen = ({ router }) => {
         <Container>
           <Row>
             <h1>About Us</h1>
-            <p className='mt-3'>
+            <div className='mt-3'>
               At Keto Food Generator, our mission is to help people reach their
               health goals through the keto diet. We believe that everyone
               deserves to live a healthy and happy life, and we are committed to
               providing our users with the tools and resources they need to
               succeed.
-            </p>
+            </div>
 
-            <p>
+            <div>
               Our application is easy to use and provides users with
               personalized meal plans that meet their individual needs and
               preferences. We offer a wide variety of keto recipes that are both
               delicious and nutritious, we focus on Filipino dishes and we make
               keto meal planning easy and convenient.
-            </p>
+            </div>
 
-            <p>
+            <div>
               We are committed to providing our users with the best possible
               experience, and we are always working to improve our keto meal
               generator. If you have any questions or suggestions, please feel
               free to submit a message below.
-            </p>
+            </div>
 
-            <p>Thank you for using Keto Food Generator!</p>
+            <div>Thank you for using Keto Food Generator!</div>
           </Row>
           <Row className='mt-3'>
             <ContactForm />

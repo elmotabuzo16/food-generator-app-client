@@ -92,11 +92,11 @@ const LoginScreen = ({ router }) => {
         <FormContainer>
           <h3 className='text-center'>
             <Image src='../../logo_top.png' height={60} />
-            <div>
-              <p>Welcome Back</p>
-            </div>
+            <div>Welcome Back</div>
           </h3>
-          <p className='text-center'>Please sign in below to get started.</p>
+          <div className='text-center'>
+            Please sign in below to get started.
+          </div>
           {error && <Message variant='danger'>{error}</Message>}
           {loading && (
             <Message variant='info'>

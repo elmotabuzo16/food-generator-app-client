@@ -7,10 +7,37 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import { Skeleton } from 'primereact/skeleton';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
+import Head from 'next/head';
+import { DOMAIN, FB_APP_ID } from '../../../../config';
 
 const TagSlug = ({ router, slug }) => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const TitleName = slug.charAt(0).toUpperCase() + slug.slice(1);
+
+  const head = () => (
+    <Head>
+      <title> {TitleName} Recipes | Keto Food Generator</title>
+      <meta name='description' content={recipes.tagDescription} />
+      <link rel='canonical' href={`${DOMAIN}/categories/recipes/${slug}`} />
+      <meta
+        property='og:title'
+        content={`${TitleName} Recipes | Keto Food Generator`}
+      />
+      <meta property='og:description' content={recipes.tagDescription} />
+      <meta property='og:type' content='webiste' />
+      <meta
+        property='og:url'
+        content={`${DOMAIN}/categories/recipes/${slug}`}
+      />
+      <meta property='og:site_name' content={`Keto Food Generator`} />
+
+      <meta property='og:image' content={`/logo.png`} />
+      <meta property='og:image:secure_url' content={`/logo.png`} />
+      <meta property='og:image:type' content='image/png' />
+      <meta property='fb:app_id' content={`${FB_APP_ID}`} />
+    </Head>
+  );
 
   const initRecipeTags = () => {
     setLoading(true);
@@ -31,12 +58,14 @@ const TagSlug = ({ router, slug }) => {
 
   return (
     <>
+      {head()}
+
       <Container style={{ fontFamily: '' }}>
         <h3
           className='text-center mt-4'
           style={{ textTransform: 'capitalize' }}
         >
-          {slug}
+          {slug} Recipes
         </h3>
         {loading && (
           <>
