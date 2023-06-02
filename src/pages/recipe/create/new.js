@@ -155,7 +155,7 @@ const ProductCreateScreen = ({ router }) => {
     { description: '', image: '' },
   ]);
 
-  const directionInputHandler = (index, event) => {
+  const directionInputHandler = async (index, event) => {
     const valueDirection = [...directionFields];
 
     if (event.target.name === 'image') {
@@ -169,11 +169,8 @@ const ProductCreateScreen = ({ router }) => {
         }
       }
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        valueDirection[index][event.target.name] = reader.result;
-      };
+      const url = await uploadImage(file);
+      valueIngredients[index][event.target.name] = url;
     } else {
       valueDirection[index][event.target.name] = event.target.value;
     }

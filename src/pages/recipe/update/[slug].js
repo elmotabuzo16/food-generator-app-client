@@ -19,6 +19,9 @@ import { getTags } from '@/actions/tagActions';
 import Head from 'next/head';
 import { APP_NAME, DOMAIN } from '../../../../config';
 import Message from '@/components/Message';
+import { uploadImage } from '@/actions/uploadActions';
+
+const MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1MB in bytes
 
 const RecipeUpdate = ({ router }) => {
   const head = () => (
@@ -254,8 +257,6 @@ const RecipeUpdate = ({ router }) => {
         success: '',
       });
     }
-
-    console.log(values);
   };
 
   const [mealType, setMealType] = useState('');
@@ -295,7 +296,7 @@ const RecipeUpdate = ({ router }) => {
       name,
       category,
       type,
-      main_image,
+      main_image: selectedImage,
       calories,
       carbs,
       protein,
