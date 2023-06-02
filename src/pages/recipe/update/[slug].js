@@ -296,7 +296,6 @@ const RecipeUpdate = ({ router }) => {
       name,
       category,
       type,
-      main_image: selectedImage,
       calories,
       carbs,
       protein,
@@ -309,6 +308,10 @@ const RecipeUpdate = ({ router }) => {
       servings: servingFields,
       directions: directionFields,
     };
+
+    if (selectedImage) {
+      foodRecipe.main_image = selectedImage;
+    }
 
     updateFood(foodRecipe, router.query.slug).then((data) => {
       if (data.error) {
