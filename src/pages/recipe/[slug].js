@@ -30,6 +30,7 @@ import {
   TwitterShareButton,
 } from 'react-share';
 import { Tag } from 'primereact/tag';
+import DoughnutChart from '@/components/DoughnutChart';
 
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
@@ -134,6 +135,23 @@ const RecipeDetailScreen = ({ recipe, router }) => {
       }
     });
   };
+
+  let cholesterolValue = 0;
+  let sugarValue = 0;
+
+  const cholesterol = recipe.servings.filter(
+    (item) => item.name == 'Cholesterol'
+  );
+
+  if (cholesterol.length !== 0) {
+    cholesterolValue = cholesterol[0].size.trim().split(' ').shift();
+  }
+
+  const sugar = recipe.servings.filter((item) => item.name == 'Sugar');
+
+  if (sugar.length !== 0) {
+    sugarValue = sugar[0].size.trim().split(' ').shift();
+  }
 
   return (
     <div itemScope itemType='http://schema.org/Recipe'>
@@ -246,13 +264,21 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 Nutritional Value
               </h4>
               <hr />
-              <ul>
+              {/* <ul>
                 {recipe.servings.map((serving) => (
                   <li key={serving._id} className='mt-3' itemProp='nutrition'>
                     {serving.name} - {serving.size} {serving.unit}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
+              <DoughnutChart
+                carbs={+recipe.carbs.trim().split(' ').shift()}
+                protein={+recipe.protein.split(' ').shift()}
+                fat={+recipe.fat.split(' ').shift()}
+                calories={+recipe.calories}
+                cholesterol={+cholesterolValue}
+                sugar={+sugarValue}
+              />
             </Col>
 
             <Col md={4}>

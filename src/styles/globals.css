@@ -298,3 +298,21 @@ ol {
 .pill:hover {
   color: #18bc9c !important;
 }
+
+.nutrients__layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.nutrients-layout__wrapper {
+  flex-wrap: nowrap;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.nutrients-info {
+  margin: auto;
+}
