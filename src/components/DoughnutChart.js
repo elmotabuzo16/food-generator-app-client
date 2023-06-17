@@ -88,7 +88,7 @@ export default function DoughnutChart({
                   style={{ color: '#F94642' }}
                 ></i>{' '}
               </span>
-              <span> {carbs} Carbs &nbsp;</span>
+              <span> {carbs}g Carbs &nbsp;</span>
             </div>
 
             <div className='mb-1'>
@@ -98,7 +98,7 @@ export default function DoughnutChart({
                   style={{ color: '#3177BB' }}
                 ></i>{' '}
               </span>
-              <span> {protein} Protein &nbsp;</span>
+              <span> {protein}g Protein &nbsp;</span>
             </div>
 
             <div className='mb-1'>
@@ -108,7 +108,7 @@ export default function DoughnutChart({
                   style={{ color: '#FDA120' }}
                 ></i>{' '}
               </span>
-              <span> {fat} Fat</span>
+              <span> {fat}g Fat</span>
             </div>
 
             <div className='mb-1'>
@@ -118,7 +118,7 @@ export default function DoughnutChart({
                   style={{ color: '#36A2EB' }}
                 ></i>{' '}
               </span>
-              <span> {sugar} Sugar</span>
+              <span> {sugar}g Sugar</span>
             </div>
 
             <div className='mb-1'>
@@ -128,7 +128,7 @@ export default function DoughnutChart({
                   style={{ color: '#FFCE56' }}
                 ></i>{' '}
               </span>
-              <span> {cholesterol} Cholesterol</span>
+              <span> {cholesterol}g Cholesterol</span>
             </div>
           </div>
         </div>

@@ -52,8 +52,11 @@ const Header = () => {
               <Nav.Link as={Link} href='/recipes'>
                 Recipes
               </Nav.Link>
+              {/* <Nav.Link as={Link} href='/browse'>
+                Browse Food Categories
+              </Nav.Link> */}
               <Nav.Link as={Link} href='/about' style={{ marginRight: '30px' }}>
-                About Us
+                About
               </Nav.Link>
 
               {/* {isAuth() && (

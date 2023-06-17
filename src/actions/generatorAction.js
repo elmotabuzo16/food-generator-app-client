@@ -26,3 +26,28 @@ export const generateFood = async (mealType) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const generateNewFood = async (type, tag) => {
+  return fetch(`${API}/recipe/filter?type=${type}&tag=${tag}`, {
+    method: 'GET',
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data !== undefined) {
+        const dataArray = Array.isArray(data) ? data : [data];
+        const recipe = dataArray.filter((recipe) => recipe.type === type);
+
+        const randomRecipe = recipe[Math.floor(Math.random() * recipe.length)];
+
+        console.log(randomRecipe);
+
+        return randomRecipe;
+      } else {
+        return {};
+      }
+    })
+    .catch((err) => console.log(err));
+};

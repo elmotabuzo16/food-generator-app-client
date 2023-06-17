@@ -107,7 +107,11 @@ const index = ({ router }) => {
     }
   };
 
-  const termsLink = <Link href='/terms'>Terms of Service</Link>;
+  const termsLink = (
+    <Link href='/terms' rel='noopener noreferrer' target='_blank'>
+      Terms and Conditions
+    </Link>
+  );
 
   return (
     <>
@@ -194,15 +198,15 @@ const index = ({ router }) => {
               ></Form.Control>
             </Form.Group>
 
-            {/* <div style={{ display: 'flex' }}>
-            <Form.Check
-              aria-label='option 1'
-              className='mt-3'
-              label={`I accept the`}
-              required
-            />
-            <div style={{ marginTop: '16px' }}> &nbsp;&nbsp;{termsLink}</div>
-          </div> */}
+            <div style={{ display: 'flex' }}>
+              <Form.Check
+                aria-label='option 1'
+                className='mt-3'
+                label={`I accept the`}
+                required
+              />
+              <div style={{ marginTop: '16px' }}> &nbsp;{termsLink}</div>
+            </div>
 
             <Button type='submit' variant='primary' className='mt-3'>
               Register

@@ -12,7 +12,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
-const Home = ({ router }) => {
+const Home = ({ router, tags }) => {
   const head = () => (
     <Head>
       <title> Keto Food Generator | Low Carb & Keto Meals</title>
@@ -101,7 +101,7 @@ const Home = ({ router }) => {
             </Row>
           </section>
           <section id='generator'>
-            <Generator />
+            <Generator tagOptions={tags} />
           </section>
         </Container>
         <section id='featured-meals' className='mt-4'>
@@ -124,5 +124,14 @@ const Home = ({ router }) => {
     </>
   );
 };
+
+export async function getServerSideProps({ params }) {
+  const res = await fetch(`${API}/recipe/foodTags`);
+  const data = await res.json();
+
+  return {
+    props: { tags: data },
+  };
+}
 
 export default withRouter(Home);

@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row, Spinner } from 'react-bootstrap';
 import Loader from './Loader.js';
 import Link from 'next/link';
-import { generateFood } from '@/actions/generatorAction.js';
+import { generateFood, generateNewFood } from '@/actions/generatorAction.js';
 import GeneratedRecipe from './GeneratedRecipe.js';
+import slugify from 'slugify';
 
-const Generator = () => {
+const Generator = ({ tagOptions }) => {
   const [values, setValues] = useState({
     loading: false,
     recipe: {},
   });
   const [mealType, setMealType] = useState('Meal');
+  const [tags, setTags] = useState('');
   const [openMealPlan, setOpenMealPlan] = useState(false);
 
   const { loading, recipe } = values;
@@ -19,7 +21,7 @@ const Generator = () => {
     e.preventDefault();
     setValues({ ...values, loading: true, recipe: {} });
 
-    generateFood(mealType).then((data) => {
+    generateNewFood(mealType, tags).then((data) => {
       setValues({ ...values, loading: false, recipe: data });
     });
 
@@ -36,7 +38,7 @@ const Generator = () => {
             <Col>
               <div className='d-flex justify-content-center mb-4 mt-4'>
                 <Form.Label className='mt-1' style={{ paddingRight: '10px' }}>
-                  Type of Food:{' '}
+                  Type of Meal:{' '}
                 </Form.Label>
 
                 <div>
@@ -51,6 +53,31 @@ const Generator = () => {
                   >
                     <option value='Meal'>Meal</option>
                     <option value='Snack'>Snacks or Desserts</option>
+                  </Form.Select>
+                </div>
+              </div>
+
+              <div className='d-flex justify-content-center mb-4 mt-4'>
+                <Form.Label className='mt-1' style={{ paddingRight: '10px' }}>
+                  Category: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </Form.Label>
+
+                <div>
+                  <Form.Select
+                    as='select'
+                    className='text-center mx-auto'
+                    style={{ width: '200px', textAlign: 'center' }}
+                    value={tags}
+                    onChange={(e) => {
+                      setTags(e.target.value);
+                    }}
+                  >
+                    <option value=''>All</option>
+                    {tagOptions.map((tag) => (
+                      <option key={tag} value={tag}>
+                        {tag}
+                      </option>
+                    ))}
                   </Form.Select>
                 </div>
               </div>
@@ -82,9 +109,32 @@ const Generator = () => {
         style={{ paddingBottom: '15px' }}
       >
         {loading && <Loader />}
-        {openMealPlan && !loading && (
+        {openMealPlan && !loading && recipe && (
           <Row>
             <GeneratedRecipe recipe={recipe} loading={loading} />
+          </Row>
+        )}
+
+        {openMealPlan && !loading && !recipe && (
+          <Row>
+            <div>
+              There are no meals available for this category. Please try another
+              combination for the type of meal and category. Alternatively, you
+              can help us by creating a meal by registering.
+            </div>
+            <div className='mt-3'>
+              You can also click the link below to check the recipes for this
+              category. Thank you.
+            </div>
+            <div className='mt-3'>
+              <Link
+                href={`/categories/recipes/${slugify(tags).toLowerCase()}`}
+                className='text-decoration-none'
+                itemProp='recipeCategory'
+              >
+                <Button className='pill'>{tags}</Button>
+              </Link>
+            </div>
           </Row>
         )}
         {!openMealPlan && (

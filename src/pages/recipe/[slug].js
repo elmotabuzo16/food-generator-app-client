@@ -35,7 +35,10 @@ import DoughnutChart from '@/components/DoughnutChart';
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
     <Head>
-      <title>{recipe.name} | Keto Food Generator</title>
+      <title>
+        {(typeof location !== 'undefined' ? `${recipe.name}` : '') +
+          ' | Keto Food Generator'}
+      </title>
       <meta name='description' content={recipe.description} />
       <link rel='canonical' href={`${DOMAIN}/recipe/${recipe.slug}`} />
       <meta
@@ -166,6 +169,15 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   {recipe.name}
                 </h1>
               </div>
+              <div className='my-3' style={{ fontSize: '15px' }}>
+                <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
+                  <FacebookIcon size={32} round /> &nbsp;
+                </FacebookShareButton>
+                <TwitterShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
+                  <TwitterIcon size={32} round /> &nbsp;
+                </TwitterShareButton>
+              </div>
+              <div className='mb-3' style={{ fontSize: '15px' }}></div>
 
               <div className='mb-4'></div>
               <div>
@@ -176,8 +188,8 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
                 </p>
               </div>
-              <div className='mt-3' style={{ display: 'flex' }}>
-                <p className='pill2'>{recipe.type}</p>
+              <div className='mt-3'>
+                <a className='pill2'>{recipe.type}</a>
                 {recipe.tags.map((t, i) => (
                   <Link
                     href={`/categories/recipes/${t.slug}`}
@@ -291,7 +303,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </>
                 )}
 
-                <div className='my-3' style={{ fontSize: '15px' }}>
+                {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
                   </FacebookShareButton>
@@ -300,7 +312,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   <TwitterShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <TwitterIcon size={32} round /> &nbsp;Share on Twitter
                   </TwitterShareButton>
-                </div>
+                </div> */}
               </aside>
             </Col>
           </Row>
