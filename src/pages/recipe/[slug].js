@@ -220,8 +220,6 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               )}
               <div>
                 <HorizontalAds />
-                <HorizontalAds />
-                <HorizontalAds />
               </div>
 
               <p itemProp='description' className='recipe__description'>
@@ -264,6 +262,9 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </li>
                 ))}
               </ul>
+              <div>
+                <HorizontalAds />
+              </div>
               <h4
                 className='mt-4 recipe-header__name'
                 style={{ fontSize: '35px' }}
@@ -282,6 +283,10 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </li>
                 ))}
               </ol>
+
+              <div>
+                <HorizontalAds />
+              </div>
               <h4
                 className='mt-4 recipe-header__name'
                 style={{ fontSize: '35px' }}
@@ -306,8 +311,6 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               />
 
               <div>
-                <HorizontalAds />
-                <HorizontalAds />
                 <HorizontalAds />
               </div>
             </Col>
@@ -338,9 +341,9 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
 
-                <HorizontalAds />
-                <HorizontalAds />
-                <HorizontalAds />
+                <div>
+                  <HorizontalAds />
+                </div>
                 {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
