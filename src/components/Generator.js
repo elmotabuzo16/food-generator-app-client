@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { generateFood, generateNewFood } from '@/actions/generatorAction.js';
 import GeneratedRecipe from './GeneratedRecipe.js';
 import slugify from 'slugify';
+import HorizontalAds from './Ads/HorizontalAds.js';
 
 const Generator = ({ tagOptions }) => {
   const [values, setValues] = useState({
@@ -112,6 +113,7 @@ const Generator = ({ tagOptions }) => {
         {openMealPlan && !loading && recipe && (
           <Row>
             <GeneratedRecipe recipe={recipe} loading={loading} />
+            <HorizontalAds />
           </Row>
         )}
 
