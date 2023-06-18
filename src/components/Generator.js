@@ -6,6 +6,7 @@ import { generateFood, generateNewFood } from '@/actions/generatorAction.js';
 import GeneratedRecipe from './GeneratedRecipe.js';
 import slugify from 'slugify';
 import HorizontalAds from './Ads/HorizontalAds.js';
+import { animateScroll as scroll, scroller } from 'react-scroll';
 
 const Generator = ({ tagOptions }) => {
   const [values, setValues] = useState({
@@ -20,6 +21,7 @@ const Generator = ({ tagOptions }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     setValues({ ...values, loading: true, recipe: {} });
 
     generateNewFood(mealType, tags).then((data) => {
@@ -27,6 +29,13 @@ const Generator = ({ tagOptions }) => {
     });
 
     setOpenMealPlan(true);
+  };
+
+  const handleClick = () => {
+    scroller.scrollTo('recipeDiv', {
+      smooth: true,
+      offset: -50, // Optional offset for fine-tuning the scroll position
+    });
   };
 
   return (
@@ -86,7 +95,14 @@ const Generator = ({ tagOptions }) => {
           </Row>
 
           {loading ? (
-            <Button variant='primary' type='submit' className='mb-4' disabled>
+            <Button
+              id='recipeDiv'
+              variant='primary'
+              type='submit'
+              className='mb-4'
+              onClick={handleClick}
+              disabled
+            >
               <span>Generating Food...</span>
               <span style={{ paddingLeft: '10px' }}>
                 <Spinner animation='border' size='sm'></Spinner>
@@ -94,9 +110,11 @@ const Generator = ({ tagOptions }) => {
             </Button>
           ) : (
             <Button
+              id='recipeDiv'
               variant='primary'
               type='submit'
               className='mb-4'
+              onClick={handleClick}
               style={{ width: '200px' }}
             >
               <span>Generate Food</span>
