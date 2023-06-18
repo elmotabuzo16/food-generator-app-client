@@ -11,6 +11,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@eisberg-labs/next-google-adsense": "^4.0.2",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.3.0",
     "chartjs": "^0.3.24",

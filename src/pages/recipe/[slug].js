@@ -31,6 +31,8 @@ import {
 } from 'react-share';
 import { Tag } from 'primereact/tag';
 import DoughnutChart from '@/components/DoughnutChart';
+import HorizontalAds from '@/components/Ads/HorizontalAds';
+import MultiplexAds from '@/components/Ads/MultiplexAds';
 
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
@@ -216,6 +218,11 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   text={` ${recipe.numReviews} ratings`}
                 />
               )}
+              <div>
+                <HorizontalAds />
+                <HorizontalAds />
+                <HorizontalAds />
+              </div>
 
               <p itemProp='description' className='recipe__description'>
                 {recipe.description}
@@ -297,6 +304,12 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 cholesterol={+cholesterolValue}
                 sugar={+sugarValue}
               />
+
+              <div>
+                <HorizontalAds />
+                <HorizontalAds />
+                <HorizontalAds />
+              </div>
             </Col>
 
             <Col md={4}>
@@ -325,6 +338,9 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
 
+                <MultiplexAds />
+                <MultiplexAds />
+                <MultiplexAds />
                 {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
