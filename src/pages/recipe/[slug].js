@@ -189,9 +189,13 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 </p>
               </div>
               <div className='mt-3'>
-                <a className='pill2' style={{ textDecoration: 'none' }}>
+                <button
+                  className='pill2'
+                  style={{ textDecoration: 'none' }}
+                  disabled
+                >
                   {recipe.type}
-                </a>
+                </button>
                 {recipe.tags.map((t, i) => (
                   <Link
                     href={`/categories/recipes/${t.slug}`}
