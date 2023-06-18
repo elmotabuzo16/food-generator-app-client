@@ -8,9 +8,9 @@ import 'primereact/resources/primereact.min.css';
 import { Skeleton } from 'primereact/skeleton';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 import Head from 'next/head';
-import { DOMAIN, FB_APP_ID } from '../../../../config';
+import { API, DOMAIN, FB_APP_ID } from '../../../../config';
 
-const TagSlug = ({ router, slug }) => {
+const TagSlug = ({ router, slug, tag }) => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const TitleName = slug.charAt(0).toUpperCase() + slug.slice(1);
@@ -18,13 +18,13 @@ const TagSlug = ({ router, slug }) => {
   const head = () => (
     <Head>
       <title> {TitleName} Recipes | Keto Food Generator</title>
-      <meta name='description' content={recipes.tagDescription} />
+      <meta name='description' content={tag.tagDescription} />
       <link rel='canonical' href={`${DOMAIN}/categories/recipes/${slug}`} />
       <meta
         property='og:title'
         content={`${TitleName} Recipes | Keto Food Generator`}
       />
-      <meta property='og:description' content={recipes.tagDescription} />
+      <meta property='og:description' content={tag.tagDescription} />
       <meta property='og:type' content='webiste' />
       <meta
         property='og:url'
@@ -174,8 +174,11 @@ export async function getServerSideProps({ params }) {
   // Fetch data for the page with the given slug
   const { slug } = params;
 
+  const res = await fetch(`${API}/tag/${slug}`);
+  const data = await res.json();
+
   return {
-    props: { slug },
+    props: { tag: data, slug, loadingRelated: false },
   };
 }
 
