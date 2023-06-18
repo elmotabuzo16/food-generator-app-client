@@ -113,7 +113,6 @@ const Generator = ({ tagOptions }) => {
         {openMealPlan && !loading && recipe && (
           <Row>
             <GeneratedRecipe recipe={recipe} loading={loading} />
-            <HorizontalAds />
           </Row>
         )}
 
