@@ -33,6 +33,7 @@ import { Tag } from 'primereact/tag';
 import DoughnutChart from '@/components/DoughnutChart';
 import HorizontalAds from '@/components/Ads/HorizontalAds';
 import MultiplexAds from '@/components/Ads/MultiplexAds';
+import VerticalAds from '@/components/Ads/VerticalAds';
 
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
@@ -342,7 +343,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 </script>
 
                 <div>
-                  <HorizontalAds />
+                  <VerticalAds />
                 </div>
                 {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
