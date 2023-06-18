@@ -338,9 +338,9 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
 
-                <MultiplexAds />
-                <MultiplexAds />
-                <MultiplexAds />
+                <HorizontalAds />
+                <HorizontalAds />
+                <HorizontalAds />
                 {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
