@@ -20,6 +20,11 @@ const Home = ({ router, tags }) => {
         name='description'
         content={`${APP_NAME} - Generate delicious and healthy Filipino Keto Meals in seconds. Our keto meal planner creates personalized meal plans based on your dietary preferences and nutritional goals. Say goodbye to boring and repetitive keto meals and hello to a healthier lifestyle with our easy-to-use keto meal generator.`}
       />
+      <meta
+        name='keywords'
+        content='keto food, ketogenic recipes, low-carb meals, keto diet, keto meal planner, keto recipes, healthy fats, keto-friendly foods, keto filipino meals, keto meal generator, keto food generator'
+      />
+
       <link rel='canonical' href={`${DOMAIN}`} />
       <meta
         property='og:title'
