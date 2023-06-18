@@ -309,6 +309,22 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   </>
                 )}
 
+                <script
+                  async
+                  src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7167271672127418'
+                  crossorigin='anonymous'
+                ></script>
+                <ins
+                  class='adsbygoogle'
+                  style={{ display: 'block' }}
+                  data-ad-format='autorelaxed'
+                  data-ad-client='ca-pub-7167271672127418'
+                  data-ad-slot='8085203419'
+                ></ins>
+                <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+
                 {/* <div className='my-3' style={{ fontSize: '15px' }}>
                   <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                     <FacebookIcon size={32} round /> &nbsp;Share on Facebook
