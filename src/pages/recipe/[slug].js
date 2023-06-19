@@ -172,6 +172,10 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                   {recipe.name}
                 </h1>
               </div>
+              <div>
+                <i class='far fa-eye'></i> {recipe.viewCount} Views
+              </div>
+
               <div className='my-3' style={{ fontSize: '15px' }}>
                 <FacebookShareButton url={`${DOMAIN}/recipe/${recipe.slug}`}>
                   <FacebookIcon size={32} round /> &nbsp;
@@ -185,12 +189,13 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               <div className='mb-4'></div>
               <div>
                 <p itemProp='cookTime'>
-                  <strong> &nbsp;&nbsp;Total Time:</strong> {recipe.totalTime}
+                  <strong>Total Time:</strong> {recipe.totalTime}
                   <strong>&nbsp;&nbsp;Serving Size:</strong>{' '}
                   {recipe.servingCount}
                   {recipe.servingCount.length > 1 ? ' servings' : ' serving'}
                 </p>
               </div>
+
               <div className='mt-3'>
                 <button
                   className='pill2'
