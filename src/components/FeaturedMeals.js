@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { Card, Row } from 'react-bootstrap';
+import HorizontalAds from './Ads/HorizontalAds';
 
 const FeaturedMeals = ({ relatedMeals }) => {
   return (
@@ -78,6 +79,11 @@ const FeaturedMeals = ({ relatedMeals }) => {
             </div>
           </Row>
         ))}
+        <Row>
+          <Card style={{ width: '20rem' }}>
+            <HorizontalAds />
+          </Card>
+        </Row>
       </div>
     </>
   );

@@ -130,6 +130,9 @@ const Generator = ({ tagOptions }) => {
         {loading && <Loader />}
         {openMealPlan && !loading && recipe && (
           <Row>
+            <Card className='mx-auto' style={{ maxWidth: '25rem' }}>
+              <HorizontalAds />
+            </Card>
             <GeneratedRecipe recipe={recipe} loading={loading} />
           </Row>
         )}
