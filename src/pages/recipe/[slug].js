@@ -38,10 +38,7 @@ import VerticalAds from '@/components/Ads/VerticalAds';
 const RecipeDetailScreen = ({ recipe, router }) => {
   const head = () => (
     <Head>
-      <title>
-        {(typeof location !== 'undefined' ? `${recipe.name}` : '') +
-          ' | Keto Food Generator'}
-      </title>
+      <title>{`${recipe.name} | Keto Food Generator`}</title>
       <meta name='description' content={recipe.description} />
       <link rel='canonical' href={`${DOMAIN}/recipe/${recipe.slug}`} />
       <meta
