@@ -173,7 +173,8 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 </h1>
               </div>
               <div>
-                <i class='far fa-eye'></i> {recipe.viewCount} Views
+                <i class='far fa-eye'></i> {recipe.viewCount} viewed on this
+                recipe.
               </div>
 
               <div className='my-3' style={{ fontSize: '15px' }}>
