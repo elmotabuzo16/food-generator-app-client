@@ -11,6 +11,7 @@ import { listFeatured } from '@/actions/recipeActions';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
+import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
 
 const Home = ({ router, tags }) => {
   const head = () => (
@@ -111,13 +112,13 @@ const Home = ({ router, tags }) => {
         </Container>
         <section id='featured-meals' className='mt-4'>
           <h3 className='pt-4 pb-5 text-center'>Featured Meals</h3>
-          {featuredMealLoading && <SkeletonCardThree />}
+          {featuredMealLoading && <SkeletonCardFour />}
           {!featuredMealLoading && (
             <FeaturedMeals relatedMeals={featuredMeal} />
           )}
 
           <h3 className='pt-4 pb-5 text-center'>Featured Snacks</h3>
-          {featuredSnackLoading && <SkeletonCardThree />}
+          {featuredSnackLoading && <SkeletonCardFour />}
           {!featuredSnackLoading && (
             <FeaturedMeals relatedMeals={featuredSnack} />
           )}
