@@ -61,3 +61,13 @@ export const generateClick = () => {
     })
     .catch((err) => {});
 };
+
+export const pageViews = () => {
+  return fetch(`${API}/generator/pageViews`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {});
+};

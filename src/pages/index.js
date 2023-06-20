@@ -12,6 +12,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
+import { pageViews } from '@/actions/generatorAction';
 
 const Home = ({ router, tags }) => {
   const head = () => (
@@ -56,6 +57,7 @@ const Home = ({ router, tags }) => {
 
       loadFeaturedMeals();
       loadFeaturedSnacks();
+      pageViews();
     }
   }, []);
 
