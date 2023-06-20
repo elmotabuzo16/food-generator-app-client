@@ -10,6 +10,12 @@ export default function MultiplexAds() {
         data-ad-format='autorelaxed'
         data-ad-client='ca-pub-7167271672127418'
         data-ad-slot='8085203419'
+        onAdLoaded={() => {
+          const adLinks = document.querySelectorAll('.adsbygoogle a');
+          adLinks.forEach((link) => {
+            link.setAttribute('target', '_blank');
+          });
+        }}
       />
 
       {/* <script

@@ -11,6 +11,12 @@ export default function VerticalAds() {
         data-ad-slot='9561936615'
         data-ad-format='auto'
         data-full-width-responsive='true'
+        onAdLoaded={() => {
+          const adLinks = document.querySelectorAll('.adsbygoogle a');
+          adLinks.forEach((link) => {
+            link.setAttribute('target', '_blank');
+          });
+        }}
       />
 
       {/* <script

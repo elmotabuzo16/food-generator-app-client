@@ -11,6 +11,12 @@ export default function HorizontalAds() {
         data-ad-slot='7440591188'
         data-ad-format='auto'
         data-full-width-responsive='true'
+        onAdLoaded={() => {
+          const adLinks = document.querySelectorAll('.adsbygoogle a');
+          adLinks.forEach((link) => {
+            link.setAttribute('target', '_blank');
+          });
+        }}
       />
 
       {/* <script
