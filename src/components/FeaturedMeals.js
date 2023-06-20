@@ -83,7 +83,7 @@ const FeaturedMeals = ({ relatedMeals }) => {
         <Row style={{ marginTop: '-10px' }}>
           <div className='col-md-4'>
             <div className='text-decoration-none'>
-              <Card style={{ width: '20rem' }}>
+              <Card style={{ width: '20rem', height: '480px' }}>
                 <Card.Body>
                   <Card.Title className='meal-title'></Card.Title>
                   <Card.Title
@@ -94,7 +94,9 @@ const FeaturedMeals = ({ relatedMeals }) => {
                       className='generator_card__body text-start pt-3'
                       style={{ fontSize: '15px' }}
                     >
-                      <HorizontalAds />
+                      <HorizontalAds
+                        style={{ width: '20rem', height: '480px' }}
+                      />
                     </div>
                   </Card.Text>
                 </Card.Body>
