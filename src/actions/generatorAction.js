@@ -51,3 +51,13 @@ export const generateNewFood = async (type, tag) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const generateClick = () => {
+  return fetch(`${API}/generator`, {
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {});
+};

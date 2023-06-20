@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row, Spinner } from 'react-bootstrap';
 import Loader from './Loader.js';
 import Link from 'next/link';
-import { generateFood, generateNewFood } from '@/actions/generatorAction.js';
+import {
+  generateClick,
+  generateFood,
+  generateNewFood,
+} from '@/actions/generatorAction.js';
 import GeneratedRecipe from './GeneratedRecipe.js';
 import slugify from 'slugify';
 import HorizontalAds from './Ads/HorizontalAds.js';
@@ -32,6 +36,7 @@ const Generator = ({ tagOptions }) => {
   };
 
   const handleClick = () => {
+    generateClick();
     scroller.scrollTo('recipeDiv', {
       smooth: true,
       offset: -50, // Optional offset for fine-tuning the scroll position

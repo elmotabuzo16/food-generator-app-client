@@ -79,10 +79,35 @@ const FeaturedMeals = ({ relatedMeals }) => {
             </div>
           </Row>
         ))}
-        <Row>
-          <Card style={{ width: '20rem' }}>
-            <HorizontalAds />
-          </Card>
+
+        <Row style={{ marginTop: '-10px' }}>
+          <div className='col-md-4'>
+            <div className='text-decoration-none'>
+              <Card style={{ width: '20rem' }}>
+                <Card.Body>
+                  <Card.Title className='meal-title'></Card.Title>
+                  <Card.Title
+                    style={{ color: 'black', fontSize: '20px' }}
+                  ></Card.Title>
+                  <Card.Text>
+                    <div
+                      className='generator_card__body text-start pt-3'
+                      style={{ fontSize: '15px' }}
+                    >
+                      <HorizontalAds />
+                    </div>
+
+                    <div
+                      className='generator_card__body text-start pt-3'
+                      style={{ fontSize: '12px' }}
+                    >
+                      <HorizontalAds />
+                    </div>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+          </div>
         </Row>
       </div>
     </>
