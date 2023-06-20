@@ -96,13 +96,6 @@ const FeaturedMeals = ({ relatedMeals }) => {
                     >
                       <HorizontalAds />
                     </div>
-
-                    <div
-                      className='generator_card__body text-start pt-3'
-                      style={{ fontSize: '12px' }}
-                    >
-                      <HorizontalAds />
-                    </div>
                   </Card.Text>
                 </Card.Body>
               </Card>
