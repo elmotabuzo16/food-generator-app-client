@@ -235,7 +235,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                 src={recipe.main_image}
                 className='article-main-image mt-4'
                 fluid
-                style={{ height: '500px', maxWidth: 'auto' }}
+                style={{ width: '100%', maxWidth: 'auto' }}
               />
               <h4
                 className='mt-4 recipe-header__name'
