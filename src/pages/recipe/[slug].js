@@ -233,6 +233,7 @@ const RecipeDetailScreen = ({ recipe, router }) => {
               <Image
                 itemProp='image'
                 src={recipe.main_image}
+                alt={recipe.name}
                 className='article-main-image mt-4'
                 fluid
                 style={{ width: '100%', maxWidth: 'auto' }}

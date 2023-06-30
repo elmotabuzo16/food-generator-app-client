@@ -1,4 +1,3 @@
-import { getTags } from '@/actions/tagActions';
 import { FilterMatchMode } from 'primereact/api';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
@@ -8,23 +7,24 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import { Button } from 'primereact/button';
 import Router from 'next/router';
+import { getCategories } from '@/actions/categoryActions';
 
-const Tags = () => {
-  const [tags, setTags] = useState([]);
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
   useEffect(() => {
-    initTags();
+    initCategories();
   }, []);
 
-  const initTags = () => {
-    getTags().then((data) => {
+  const initCategories = () => {
+    getCategories().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        setTags(data);
+        setCategories(data);
       }
     });
   };
@@ -32,14 +32,14 @@ const Tags = () => {
   const createProductHandler = (e) => {
     e.preventDefault();
 
-    Router.replace(`/admin/tags/new`);
+    Router.replace(`/admin/categories/new`);
   };
 
   return (
     <>
       <div className='mt-4'>
         <InputText
-          placeholder='Search Tags'
+          placeholder='Search Categories'
           onInput={(e) =>
             setFilters({
               ...filters,
@@ -51,12 +51,12 @@ const Tags = () => {
           }
         />
         <Button style={{ float: 'right' }} onClick={createProductHandler}>
-          Create Tags
+          Create Categories
         </Button>
       </div>
 
       <DataTable
-        value={tags}
+        value={categories}
         filters={filters}
         tableStyle={{ minWidth: '50rem' }}
         className='mt-4'
@@ -68,4 +68,4 @@ const Tags = () => {
   );
 };
 
-export default Tags;
+export default Categories;

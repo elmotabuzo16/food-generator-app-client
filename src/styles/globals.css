@@ -246,6 +246,12 @@ ol {
   font-size: 13px;
 }
 
+#articles-card .card:hover {
+  transform: translate(-2px, -2px);
+  /* box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.253) !important; */
+  box-shadow: 5px 5px 0 #fec445;
+}
+
 #featured-meals .card:hover {
   transform: translate(-2px, -2px);
   /* box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.253) !important; */
@@ -315,4 +321,14 @@ ol {
 
 .nutrients-info {
   margin: auto;
+}
+
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+}
+
+.article-image img {
+  max-width: 100%;
+  height: auto;
 }

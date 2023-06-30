@@ -5,16 +5,15 @@ import Generator from '@/components/Generator';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { API, APP_NAME, DOMAIN } from '../../config';
-import Router, { withRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import FeaturedMeals from '@/components/FeaturedMeals';
 import { listFeatured } from '@/actions/recipeActions';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
-import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
 import { pageViews } from '@/actions/generatorAction';
 
-const Home = ({ router, tags }) => {
+const Home = ({ tags }) => {
   const head = () => (
     <Head>
       <title> Keto Food Generator | Low Carb & Keto Meals</title>

@@ -55,8 +55,8 @@ const Header = () => {
               <Nav.Link as={Link} href='/recipes'>
                 Recipes
               </Nav.Link>
-              {/* <Nav.Link as={Link} href='/browse'>
-                Browse Food Categories
+              {/* <Nav.Link as={Link} href='/article'>
+                Articles
               </Nav.Link> */}
               <Nav.Link as={Link} href='/about' style={{ marginRight: '30px' }}>
                 About
@@ -93,9 +93,45 @@ const Header = () => {
 
               {isAuth() && isAuth().isAdmin && (
                 <>
-                  <Nav.Link as={Link} href='/admin'>
-                    Admin Dashboard
-                  </Nav.Link>
+                  <NavDropdown title='Admin' id='basic-nav-dropdown'>
+                    <NavDropdown.Item>
+                      <Link
+                        href='/admin/created-recipes'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Recipes
+                      </Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link
+                        href='/admin/tags'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Tags
+                      </Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item>
+                      <Link
+                        href='/admin/articles/new'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Article
+                      </Link>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <Link
+                        href='/admin/categories'
+                        className='text-decoration-none'
+                        style={{ color: 'gray' }}
+                      >
+                        Category
+                      </Link>
+                    </NavDropdown.Item>{' '}
+                  </NavDropdown>
 
                   <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
                 </>
