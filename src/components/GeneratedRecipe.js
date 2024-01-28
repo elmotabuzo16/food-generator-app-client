@@ -23,12 +23,12 @@ const GeneratedRecipe = ({ recipe }) => {
               }}
             />
 
-            <Rating
+            {/* <Rating
               value={recipe.rating}
               text={`${'  '}${recipe.numReviews} reviews`}
-            />
+            /> */}
 
-            <div className='generator_card__body text-start pt-3'>
+            <div className='generator_card__body text-start'>
               <span>
                 <i className='fa-regular fa-clock'></i>
               </span>

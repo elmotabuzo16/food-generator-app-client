@@ -12,6 +12,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import SkeletonCardFour from '@/components/Skeleton/SkeletonCardFour';
 import { pageViews } from '@/actions/generatorAction';
+import SkeletonCardThree from '@/components/Skeleton/SkeletonCardThree';
 
 const Home = ({ tags }) => {
   const head = () => (
@@ -113,13 +114,13 @@ const Home = ({ tags }) => {
         </Container>
         <section id='featured-meals' className='mt-4'>
           <h3 className='pt-4 pb-5 text-center'>Featured Meals</h3>
-          {featuredMealLoading && <SkeletonCardFour />}
+          {featuredMealLoading && <SkeletonCardThree />}
           {!featuredMealLoading && (
             <FeaturedMeals relatedMeals={featuredMeal} />
           )}
 
           <h3 className='pt-4 pb-5 text-center'>Featured Snacks</h3>
-          {featuredSnackLoading && <SkeletonCardFour />}
+          {featuredSnackLoading && <SkeletonCardThree />}
           {!featuredSnackLoading && (
             <FeaturedMeals relatedMeals={featuredSnack} />
           )}

@@ -80,7 +80,7 @@ const FeaturedMeals = ({ relatedMeals }) => {
           </Row>
         ))}
 
-        <Row style={{ marginTop: '-10px' }}>
+        {/* <Row style={{ marginTop: '-10px' }}>
           <div className='col-md-4'>
             <div className='text-decoration-none'>
               <Card style={{ width: '20rem', height: '480px' }}>
@@ -103,7 +103,7 @@ const FeaturedMeals = ({ relatedMeals }) => {
               </Card>
             </div>
           </div>
-        </Row>
+        </Row> */}
       </div>
     </>
   );
