@@ -114,7 +114,7 @@ body {
 }
 
 .ingredient-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 550;
   color: #333;
   padding-left: 30px;
@@ -135,11 +135,10 @@ body {
 }
 
 .ingredient-size-unit {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   color: #6f737a;
   line-height: 24px;
-  align-items: center;
 }
 
 .ingredient-image {
@@ -332,3 +331,4 @@ ol {
   max-width: 100%;
   height: auto;
 }
+

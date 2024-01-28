@@ -260,13 +260,17 @@ const RecipeDetailScreen = ({ recipe, router }) => {
                         className='ingredient-image'
                       />
                     )}
-                    <p className='ingredient-name'> {ingredient.name}</p>
-                    <p className='ingredient-size-unit ms-auto'>
+                    <div className='ingredient-name next-line-p'>{ingredient.name}
+                    <p className='ingredient-size-unit'>
                       {ingredient.size} {ingredient.unit}
                     </p>
+                    </div>
+                    
                   </li>
                 ))}
               </ul>
+
+              
               <div>
                 <HorizontalAds />
               </div>
